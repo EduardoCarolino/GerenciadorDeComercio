@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes - Sistema de Gerenciamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cliente.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i data-feather="shield"></i> Meu Sistema</h3>
+            </div>
+            <ul>
+                <li><a href="dashboard.html"><i data-feather="home"></i><span>Dashboard</span></a></li>
+                <li class="active"><a href="clientes.html"><i data-feather="users"></i><span>Clientes</span></a></li>
+                <li><a href="funcionarios.html"><i data-feather="user"></i><span>Funcionários</span></a></li>
+                <li><a href="fornecedores.html"><i data-feather="truck"></i><span>Fornecedores</span></a></li>
+                <li><a href="produtos.html"><i data-feather="box"></i><span>Produtos</span></a></li>
+                <li><a href="vendas.html"><i data-feather="dollar-sign"></i><span>Vendas</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" onclick="logout()"><i data-feather="log-out"></i><span>Sair</span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header>
+                <h1><i data-feather="users"></i> Clientes</h1>
+                <p>Gerencie seus clientes</p>
+            </header>
+
+            <!-- Navegação por seções -->
+            <div class="section-navigation">
+                <button class="section-btn active" data-section="cadastro">
+                    <i data-feather="user-plus"></i>
+                    <span>Cadastro</span>
+                </button>
+                <button class="section-btn" data-section="lista">
+                    <i data-feather="list"></i>
+                    <span>Lista</span>
+                </button>
+                <button class="section-btn" data-section="relatorios">
+                    <i data-feather="bar-chart-2"></i>
+                    <span>Relatórios</span>
+                </button>
+                <button class="section-btn" data-section="configuracoes">
+                    <i data-feather="settings"></i>
+                    <span>Configurações</span>
+                </button>
+            </div>
+
+            <!-- Seção de Cadastro -->
+            <div class="section-content active" id="cadastro-section">
+                <div class="form-container">
+                <div class="form-header">
+                    <h2>Cadastro de Clientes</h2>
+                    <p>Preencha os dados abaixo para registrar um novo cliente.</p>
+                </div>
+                
+                <form class="client-form" id="clientForm">
+                    <div class="form-section">
+                        <div class="form-group col-span-1">
+                            <label for="codigo">Código</label>
+                            <input type="text" id="codigo" name="codigo" disabled value="CLI0001">
+                        </div>
+                        <div class="form-group col-span-3">
+                            <label for="nome" class="required">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" required minlength="3" maxlength="100" 
+                                   placeholder="Digite o nome completo do cliente">
+                        </div>
+                        <div class="form-group col-span-4">
+                            <label for="email" class="required">E-mail</label>
+                            <input type="email" id="email" name="email" required 
+                                   placeholder="exemplo@email.com">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="celular">Celular</label>
+                            <input type="tel" id="celular" name="celular" 
+                                   placeholder="(XX) XXXXX-XXXX" maxlength="15">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="telefone">Telefone (fixo)</label>
+                            <input type="tel" id="telefone" name="telefone" 
+                                   placeholder="(XX) XXXX-XXXX" maxlength="14">
+                        </div>
+                    </div>
+
+                    <div class="form-section-divider">
+                        <h4>Endereço</h4>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-group col-span-1">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" name="cep" placeholder="XXXXX-XXX" 
+                                   maxlength="9" data-tooltip="Digite o CEP para preenchimento automático">
+                        </div>
+                        <div class="form-group col-span-3">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" name="endereco" 
+                                   placeholder="Rua, Avenida, etc.">
+                        </div>
+                         <div class="form-group col-span-1">
+                            <label for="numero">Nº</label>
+                            <input type="text" id="numero" name="numero" 
+                                   placeholder="123" maxlength="10">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" name="bairro" 
+                                   placeholder="Nome do bairro">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" id="cidade" name="cidade" 
+                                   placeholder="Nome da cidade">
+                        </div>
+                         <div class="form-group col-span-1">
+                            <label for="uf">UF</label>
+                            <select id="uf" name="uf">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                     <div class="form-footer">
+                        <button type="button" class="btn btn-secondary btn-excluir">Excluir</button>
+                        <button type="button" class="btn btn-outline btn-novo">Novo</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                     </div>
+                </form>
+                </div>
+            </div>
+
+            <!-- Seção de Lista -->
+            <div class="section-content" id="lista-section">
+                <div class="table-container">
+                <div class="table-header">
+                    <h3><i data-feather="users"></i> Lista de Clientes</h3>
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i data-feather="search"></i>
+                            <input type="text" id="searchInput" placeholder="Buscar clientes...">
+                        </div>
+                        <select class="filter-select" id="filterSelect">
+                            <option value="">Todos os clientes</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="PR">Paraná</option>
+                        </select>
+                        <button class="btn btn-outline" id="exportBtn">
+                            <i data-feather="download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                <table id="clientesTable">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Celular</th>
+                            <th>Cidade</th>
+                            <th>UF</th>
+                            <th>Data Cadastro</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                <i data-feather="users"></i>
+                                <h4>Nenhum cliente cadastrado</h4>
+                                <p>Comece cadastrando seu primeiro cliente usando o formulário acima.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button id="prevBtn" disabled>
+                        <i data-feather="chevron-left"></i> Anterior
+                    </button>
+                    <span class="record-count" id="recordCount">0 registros</span>
+                    <button id="nextBtn" disabled>
+                        Próximo <i data-feather="chevron-right"></i>
+                    </button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Seção de Relatórios -->
+            <div class="section-content" id="relatorios-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i data-feather="bar-chart-2"></i> Relatórios de Clientes</h2>
+                        <p>Gere relatórios e análises dos seus clientes.</p>
+                    </div>
+                    
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="users"></i>
+                            </div>
+                            <h3>Clientes por Estado</h3>
+                            <p>Distribuição geográfica dos clientes</p>
+                            <button class="btn btn-primary" onclick="clienteManager.gerarRelatorioEstado()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="calendar"></i>
+                            </div>
+                            <h3>Novos Clientes</h3>
+                            <p>Clientes cadastrados por período</p>
+                            <button class="btn btn-primary" onclick="clienteManager.gerarRelatorioNovos()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="mail"></i>
+                            </div>
+                            <h3>Lista de E-mails</h3>
+                            <p>Exportar lista de e-mails para marketing</p>
+                            <button class="btn btn-primary" onclick="clienteManager.exportarEmails()">
+                                <i data-feather="download"></i> Exportar E-mails
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="phone"></i>
+                            </div>
+                            <h3>Lista de Telefones</h3>
+                            <p>Exportar contatos telefônicos</p>
+                            <button class="btn btn-primary" onclick="clienteManager.exportarTelefones()">
+                                <i data-feather="download"></i> Exportar Telefones
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Configurações -->
+            <div class="section-content" id="configuracoes-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i data-feather="settings"></i> Configurações de Clientes</h2>
+                        <p>Configure as opções e preferências para o módulo de clientes.</p>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <h3><i data-feather="hash"></i> Numeração</h3>
+                            <div class="form-group">
+                                <label for="prefixo-codigo">Prefixo do Código</label>
+                                <input type="text" id="prefixo-codigo" value="CLI" maxlength="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="proximo-numero">Próximo Número</label>
+                                <input type="number" id="proximo-numero" value="1" min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="map-pin"></i> Endereço</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="busca-cep-automatica" checked>
+                                    Busca automática de CEP
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="endereco-obrigatorio">
+                                    Endereço obrigatório
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="phone"></i> Contato</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="telefone-obrigatorio">
+                                    Telefone obrigatório
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="celular-obrigatorio">
+                                    Celular obrigatório
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="database"></i> Dados</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="backup-automatico">
+                                    Backup automático
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="dias-retencao">Dias de retenção</label>
+                                <input type="number" id="dias-retencao" value="365" min="30">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline" onclick="clienteManager.resetarConfiguracoes()">
+                            <i data-feather="refresh-cw"></i> Resetar
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="clienteManager.salvarConfiguracoes()">
+                            <i data-feather="save"></i> Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        feather.replace();
+        
+        // Funcionalidades específicas para a página de clientes
+        class ClienteManager {
+            constructor() {
+                this.clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+                this.currentPage = 1;
+                this.itemsPerPage = 10;
+                this.filteredClientes = [...this.clientes];
+                this.currentSection = 'cadastro';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.setupSectionNavigation();
+                this.loadClientesTable();
+                this.setupMasks();
+                this.setupCEPValidation();
+                this.loadConfiguracoes();
+            }
+
+            setupEventListeners() {
+                // Busca em tempo real
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        this.filterClientes(e.target.value);
+                    });
+                }
+
+                // Filtro por UF
+                const filterSelect = document.getElementById('filterSelect');
+                if (filterSelect) {
+                    filterSelect.addEventListener('change', (e) => {
+                        this.filterByUF(e.target.value);
+                    });
+                }
+
+                // Botão de exportar
+                const exportBtn = document.getElementById('exportBtn');
+                if (exportBtn) {
+                    exportBtn.addEventListener('click', () => {
+                        this.exportClientes();
+                    });
+                }
+
+                // Paginação
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                if (prevBtn) prevBtn.addEventListener('click', () => this.previousPage());
+                if (nextBtn) nextBtn.addEventListener('click', () => this.nextPage());
+            }
+
+            setupSectionNavigation() {
+                const sectionBtns = document.querySelectorAll('.section-btn');
+                sectionBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const section = e.currentTarget.dataset.section;
+                        this.showSection(section);
+                    });
+                });
+            }
+
+            showSection(sectionName) {
+                // Remove classe ativa de todos os botões e seções
+                document.querySelectorAll('.section-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.section-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Adiciona classe ativa ao botão e seção selecionados
+                document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+                document.getElementById(`${sectionName}-section`).classList.add('active');
+
+                this.currentSection = sectionName;
+
+                // Carrega dados específicos da seção se necessário
+                if (sectionName === 'lista') {
+                    this.loadClientesTable();
+                } else if (sectionName === 'relatorios') {
+                    this.loadRelatorios();
+                } else if (sectionName === 'configuracoes') {
+                    this.loadConfiguracoes();
+                }
+            }
+
+            setupMasks() {
+                // Máscara para telefone celular
+                const celularInput = document.getElementById('celular');
+                if (celularInput) {
+                    celularInput.addEventListener('input', (e) => {
+                        e.target.value = this.formatPhone(e.target.value, true);
+                    });
+                }
+
+                // Máscara para telefone fixo
+                const telefoneInput = document.getElementById('telefone');
+                if (telefoneInput) {
+                    telefoneInput.addEventListener('input', (e) => {
+                        e.target.value = this.formatPhone(e.target.value, false);
+                    });
+                }
+
+                // Máscara para CEP
+                const cepInput = document.getElementById('cep');
+                if (cepInput) {
+                    cepInput.addEventListener('input', (e) => {
+                        e.target.value = this.formatCEP(e.target.value);
+                    });
+                }
+            }
+
+            setupCEPValidation() {
+                const cepInput = document.getElementById('cep');
+                if (cepInput) {
+                    cepInput.addEventListener('blur', (e) => {
+                        const cep = e.target.value.replace(/\D/g, '');
+                        if (cep.length === 8) {
+                            this.buscarCEP(cep);
+                        }
+                    });
+                }
+            }
+
+            formatPhone(value, isMobile) {
+                const numbers = value.replace(/\D/g, '');
+                if (isMobile) {
+                    return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                } else {
+                    return numbers.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                }
+            }
+
+            formatCEP(value) {
+                const numbers = value.replace(/\D/g, '');
+                return numbers.replace(/(\d{5})(\d{3})/, '$1-$2');
+            }
+
+            async buscarCEP(cep) {
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+                    
+                    if (!data.erro) {
+                        document.getElementById('endereco').value = data.logradouro || '';
+                        document.getElementById('bairro').value = data.bairro || '';
+                        document.getElementById('cidade').value = data.localidade || '';
+                        document.getElementById('uf').value = data.uf || '';
+                    }
+                } catch (error) {
+                    console.log('Erro ao buscar CEP:', error);
+                }
+            }
+
+            filterClientes(searchTerm) {
+                const term = searchTerm.toLowerCase();
+                this.filteredClientes = this.clientes.filter(cliente => 
+                    cliente.nome.toLowerCase().includes(term) ||
+                    cliente.email.toLowerCase().includes(term) ||
+                    cliente.celular.includes(term) ||
+                    cliente.cidade.toLowerCase().includes(term)
+                );
+                this.currentPage = 1;
+                this.loadClientesTable();
+            }
+
+            filterByUF(uf) {
+                if (uf === '') {
+                    this.filteredClientes = [...this.clientes];
+                } else {
+                    this.filteredClientes = this.clientes.filter(cliente => cliente.uf === uf);
+                }
+                this.currentPage = 1;
+                this.loadClientesTable();
+            }
+
+            loadClientesTable() {
+                const tbody = document.querySelector('#clientesTable tbody');
+                const pagination = document.getElementById('pagination');
+                const recordCount = document.getElementById('recordCount');
+                
+                if (!tbody) return;
+
+                if (this.filteredClientes.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                <i data-feather="search"></i>
+                                <h4>Nenhum cliente encontrado</h4>
+                                <p>Tente ajustar os filtros de busca.</p>
+                            </td>
+                        </tr>
+                    `;
+                    pagination.style.display = 'none';
+                    recordCount.textContent = '0 registros';
+                    feather.replace();
+                    return;
+                }
+
+                // Paginação
+                const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const pageClientes = this.filteredClientes.slice(startIndex, endIndex);
+
+                tbody.innerHTML = pageClientes.map(cliente => `
+                    <tr class="fade-in-up">
+                        <td><strong>${cliente.codigo}</strong></td>
+                        <td>${cliente.nome}</td>
+                        <td>${cliente.email}</td>
+                        <td>${cliente.celular || '-'}</td>
+                        <td>${cliente.cidade || '-'}</td>
+                        <td>${cliente.uf || '-'}</td>
+                        <td>${cliente.dataCadastro || '-'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-editar" onclick="clienteManager.editCliente(${cliente.id})" 
+                                        data-tooltip="Editar cliente">
+                                    <i data-feather="edit-2"></i>
+                                </button>
+                                <button class="btn btn-sm btn-excluir" onclick="clienteManager.deleteCliente(${cliente.id})" 
+                                        data-tooltip="Excluir cliente">
+                                    <i data-feather="trash-2"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+
+                // Atualizar paginação
+                this.updatePagination();
+                
+                // Atualizar contador
+                recordCount.textContent = `${this.filteredClientes.length} registro${this.filteredClientes.length !== 1 ? 's' : ''}`;
+                
+                // Mostrar paginação se necessário
+                pagination.style.display = this.filteredClientes.length > this.itemsPerPage ? 'flex' : 'none';
+                
+                feather.replace();
+            }
+
+            updatePagination() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const totalPages = Math.ceil(this.filteredClientes.length / this.itemsPerPage);
+
+                if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+                if (nextBtn) nextBtn.disabled = this.currentPage === totalPages;
+            }
+
+            previousPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    this.loadClientesTable();
+                }
+            }
+
+            nextPage() {
+                const totalPages = Math.ceil(this.filteredClientes.length / this.itemsPerPage);
+                if (this.currentPage < totalPages) {
+                    this.currentPage++;
+                    this.loadClientesTable();
+                }
+            }
+
+            editCliente(id) {
+                const cliente = this.clientes.find(c => c.id === id);
+                if (cliente) {
+                    // Preencher formulário com dados do cliente
+                    Object.keys(cliente).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = cliente[key];
+                        }
+                    });
+                    
+                    // Scroll para o formulário
+                    document.querySelector('.form-container').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                    
+                    // Mostrar alerta
+                    this.showAlert('Cliente carregado para edição', 'info');
+                }
+            }
+
+            deleteCliente(id) {
+                if (confirm('Tem certeza que deseja excluir este cliente?')) {
+                    this.clientes = this.clientes.filter(c => c.id !== id);
+                    localStorage.setItem('clientes', JSON.stringify(this.clientes));
+                    this.filteredClientes = this.filteredClientes.filter(c => c.id !== id);
+                    this.loadClientesTable();
+                    this.showAlert('Cliente excluído com sucesso!', 'success');
+                }
+            }
+
+            exportClientes() {
+                const data = this.filteredClientes.map(cliente => ({
+                    'Código': cliente.codigo,
+                    'Nome': cliente.nome,
+                    'E-mail': cliente.email,
+                    'Celular': cliente.celular,
+                    'Telefone': cliente.telefone,
+                    'CEP': cliente.cep,
+                    'Endereço': cliente.endereco,
+                    'Número': cliente.numero,
+                    'Bairro': cliente.bairro,
+                    'Cidade': cliente.cidade,
+                    'UF': cliente.uf,
+                    'Data Cadastro': cliente.dataCadastro
+                }));
+
+                const csv = this.convertToCSV(data);
+                this.downloadCSV(csv, 'clientes.csv');
+                this.showAlert('Dados exportados com sucesso!', 'success');
+            }
+
+            convertToCSV(data) {
+                const headers = Object.keys(data[0]);
+                const csvContent = [
+                    headers.join(','),
+                    ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
+                ].join('\n');
+                return csvContent;
+            }
+
+            downloadCSV(csv, filename) {
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            showAlert(message, type = 'info') {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.textContent = message;
+                alert.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+
+                const colors = {
+                    success: '#16a34a',
+                    error: '#dc2626',
+                    warning: '#d97706',
+                    info: '#0ea5e9'
+                };
+                alert.style.backgroundColor = colors[type] || colors.info;
+
+                document.body.appendChild(alert);
+
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            }
+
+            // === MÉTODOS PARA RELATÓRIOS ===
+            loadRelatorios() {
+                // Carrega dados para os relatórios
+                console.log('Carregando relatórios...');
+            }
+
+            gerarRelatorioEstado() {
+                const relatorio = this.clientes.reduce((acc, cliente) => {
+                    const uf = cliente.uf || 'Não informado';
+                    acc[uf] = (acc[uf] || 0) + 1;
+                    return acc;
+                }, {});
+
+                const csv = Object.entries(relatorio)
+                    .map(([uf, quantidade]) => `${uf},${quantidade}`)
+                    .join('\n');
+                
+                const csvContent = 'Estado,Quantidade\n' + csv;
+                this.downloadCSV(csvContent, 'clientes_por_estado.csv');
+                this.showAlert('Relatório de clientes por estado gerado!', 'success');
+            }
+
+            gerarRelatorioNovos() {
+                const hoje = new Date();
+                const ultimos30Dias = new Date(hoje.getTime() - 30 * 24 * 60 * 60 * 1000);
+                
+                const novosClientes = this.clientes.filter(cliente => {
+                    const dataCadastro = new Date(cliente.dataCadastro.split('/').reverse().join('-'));
+                    return dataCadastro >= ultimos30Dias;
+                });
+
+                const csv = novosClientes.map(cliente => 
+                    `${cliente.codigo},${cliente.nome},${cliente.email},${cliente.dataCadastro}`
+                ).join('\n');
+                
+                const csvContent = 'Código,Nome,E-mail,Data Cadastro\n' + csv;
+                this.downloadCSV(csvContent, 'novos_clientes_30_dias.csv');
+                this.showAlert('Relatório de novos clientes gerado!', 'success');
+            }
+
+            exportarEmails() {
+                const emails = this.clientes
+                    .filter(cliente => cliente.email)
+                    .map(cliente => cliente.email)
+                    .join('\n');
+                
+                this.downloadCSV(emails, 'lista_emails_clientes.txt');
+                this.showAlert('Lista de e-mails exportada!', 'success');
+            }
+
+            exportarTelefones() {
+                const telefones = this.clientes
+                    .filter(cliente => cliente.celular || cliente.telefone)
+                    .map(cliente => `${cliente.nome},${cliente.celular || cliente.telefone}`)
+                    .join('\n');
+                
+                const csvContent = 'Nome,Telefone\n' + telefones;
+                this.downloadCSV(csvContent, 'lista_telefones_clientes.csv');
+                this.showAlert('Lista de telefones exportada!', 'success');
+            }
+
+            // === MÉTODOS PARA CONFIGURAÇÕES ===
+            loadConfiguracoes() {
+                const configs = JSON.parse(localStorage.getItem('clienteConfigs')) || {
+                    prefixoCodigo: 'CLI',
+                    proximoNumero: 1,
+                    buscaCepAutomatica: true,
+                    enderecoObrigatorio: false,
+                    telefoneObrigatorio: false,
+                    celularObrigatorio: false,
+                    backupAutomatico: false,
+                    diasRetencao: 365
+                };
+
+                // Aplica as configurações nos campos
+                Object.keys(configs).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = configs[key];
+                        } else {
+                            element.value = configs[key];
+                        }
+                    }
+                });
+            }
+
+            salvarConfiguracoes() {
+                const configs = {
+                    prefixoCodigo: document.getElementById('prefixo-codigo').value,
+                    proximoNumero: parseInt(document.getElementById('proximo-numero').value),
+                    buscaCepAutomatica: document.getElementById('busca-cep-automatica').checked,
+                    enderecoObrigatorio: document.getElementById('endereco-obrigatorio').checked,
+                    telefoneObrigatorio: document.getElementById('telefone-obrigatorio').checked,
+                    celularObrigatorio: document.getElementById('celular-obrigatorio').checked,
+                    backupAutomatico: document.getElementById('backup-automatico').checked,
+                    diasRetencao: parseInt(document.getElementById('dias-retencao').value)
+                };
+
+                localStorage.setItem('clienteConfigs', JSON.stringify(configs));
+                this.showAlert('Configurações salvas com sucesso!', 'success');
+            }
+
+            resetarConfiguracoes() {
+                if (confirm('Tem certeza que deseja resetar as configurações para os valores padrão?')) {
+                    localStorage.removeItem('clienteConfigs');
+                    this.loadConfiguracoes();
+                    this.showAlert('Configurações resetadas!', 'info');
+                }
+            }
+        }
+
+        // Inicializar o gerenciador de clientes
+        let clienteManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            clienteManager = new ClienteManager();
+        });
+    </script>
+</body>
+</html>
