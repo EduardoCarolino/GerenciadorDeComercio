@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Gerenciamento</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Card de login -->
+        <div class="login-card">
+            <!-- Header do card -->
+            <div class="login-header">
+                <h1>Seja bem vindo!</h1>
+                <p>Acesse sua conta para acompanhar seus resultados, gerenciar clientes e impulsionar suas vendas.</p>
+            </div>
+
+            <!-- Formulário de login -->
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="E-mail"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Senha"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <!-- Botão de login -->
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Entrar</span>
+                    <div class="btn-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        Entrando...
+                    </div>
+                </button>
+
+                <!-- Link de recuperação de senha -->
+                <div class="forgot-password-container">
+                    <a href="#" class="forgot-password" id="forgotPassword">
+                        Esqueci minha senha
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de esqueci senha -->
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i data-feather="key"></i> Recuperar Senha</h3>
+                <button class="close-modal" id="closeModal">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Digite seu e-mail para receber as instruções de recuperação de senha.</p>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="recoveryEmail">E-mail</label>
+                        <input 
+                            type="email" 
+                            id="recoveryEmail" 
+                            placeholder="seu@email.com"
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="send"></i> Enviar Instruções
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificações -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script src="js/login.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
