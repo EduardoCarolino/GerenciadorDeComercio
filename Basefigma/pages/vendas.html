@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas - Sistema de Gerenciamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/venda.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i data-feather="shield"></i> Meu Sistema</h3>
+            </div>
+            <ul>
+                <li><a href="dashboard.html"><i data-feather="home"></i><span>Dashboard</span></a></li>
+                <li><a href="clientes.html"><i data-feather="users"></i><span>Clientes</span></a></li>
+                <li><a href="funcionarios.html"><i data-feather="user"></i><span>Funcionários</span></a></li>
+                <li><a href="fornecedores.html"><i data-feather="truck"></i><span>Fornecedores</span></a></li>
+                <li><a href="produtos.html"><i data-feather="box"></i><span>Produtos</span></a></li>
+                <li class="active"><a href="vendas.html"><i data-feather="dollar-sign"></i><span>Vendas</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" onclick="logout()"><i data-feather="log-out"></i><span>Sair</span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header>
+                <h1><i data-feather="dollar-sign"></i> Vendas</h1>
+                <p>Gerencie suas vendas</p>
+            </header>
+
+            <!-- Navegação por seções -->
+            <div class="section-navigation">
+                <button class="section-btn active" data-section="pdv">
+                    <i data-feather="shopping-cart"></i>
+                    <span>PDV</span>
+                </button>
+                <button class="section-btn" data-section="historico">
+                    <i data-feather="list"></i>
+                    <span>Histórico</span>
+                </button>
+                <button class="section-btn" data-section="relatorios">
+                    <i data-feather="bar-chart-2"></i>
+                    <span>Relatórios</span>
+                </button>
+                <button class="section-btn" data-section="configuracoes">
+                    <i data-feather="settings"></i>
+                    <span>Configurações</span>
+                </button>
+            </div>
+
+            <!-- Seção PDV (Ponto de Venda) -->
+            <div class="section-content active" id="pdv-section">
+                <div class="form-container">
+                <div class="form-header">
+                    <h2><i data-feather="shopping-cart"></i> Ponto de Venda (PDV)</h2>
+                    <p>Sistema completo para processamento de vendas</p>
+                </div>
+                
+                <div class="pdv-container">
+                    <!-- Lado Esquerdo - Dados do Cliente e Produto -->
+                    <div class="pdv-left">
+                        <!-- Dados do Cliente -->
+                        <div class="pdv-section">
+                            <h3><i data-feather="user"></i> Dados do Cliente</h3>
+                            <div class="form-group">
+                                <label for="clienteCpf">CPF</label>
+                                <input type="text" id="clienteCpf" name="clienteCpf" placeholder="000.000.000-00" maxlength="14">
+                            </div>
+                            <div class="form-group">
+                                <label for="clienteNome">Nome</label>
+                                <input type="text" id="clienteNome" name="clienteNome" placeholder="Nome do cliente">
+                            </div>
+                            <div class="form-group">
+                                <label for="clienteTelefone">Telefone</label>
+                                <input type="tel" id="clienteTelefone" name="clienteTelefone" placeholder="(00) 00000-0000">
+                            </div>
+                        </div>
+
+                        <!-- Dados do Produto -->
+                        <div class="pdv-section">
+                            <h3><i data-feather="package"></i> Dados do Produto</h3>
+                            <div class="form-group">
+                                <label for="produtoCodigo">Código</label>
+                                <input type="text" id="produtoCodigo" name="produtoCodigo" placeholder="Código do produto">
+                            </div>
+                            <div class="form-group">
+                                <label for="produtoNome">Produto</label>
+                                <select id="produtoNome" name="produtoNome" required>
+                                    <option value="">Selecione o produto</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="produtoPreco">Preço</label>
+                                <input type="number" id="produtoPreco" name="produtoPreco" step="0.01" min="0" placeholder="0,00" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="produtoQuantidade">Quantidade</label>
+                                <input type="number" id="produtoQuantidade" name="produtoQuantidade" min="1" value="1" required>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="adicionarItem">
+                                <i data-feather="plus"></i> Adicionar Item
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lado Direito - Carrinho e Total -->
+                    <div class="pdv-right">
+                        <!-- Carrinho de Compras -->
+                        <div class="pdv-section">
+                            <h3><i data-feather="shopping-bag"></i> Carrinho de Compras</h3>
+                            <div class="cart-container">
+                                <div class="cart-item" style="font-weight: 600; background: var(--secondary-color);">
+                                    <div>Código</div>
+                                    <div>Produto</div>
+                                    <div>Qtd</div>
+                                    <div>Preço</div>
+                                    <div>Subtotal</div>
+                                    <div>Ação</div>
+                                </div>
+                                <div id="cartItems">
+                                    <div style="text-align: center; padding: 40px; color: var(--text-light);">
+                                        <i data-feather="shopping-cart"></i>
+                                        <p>Carrinho vazio</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total da Venda -->
+                        <div class="total-section">
+                            <h3><i data-feather="trending-up"></i> Total da Venda</h3>
+                            <div class="total-value" id="totalVenda">R$ 0,00</div>
+                            <div class="pdv-actions">
+                                <button type="button" class="btn btn-success" id="finalizarVenda">
+                                    <i data-feather="check-circle"></i> Finalizar Venda
+                                </button>
+                                <button type="button" class="btn btn-outline" id="cancelarVenda">
+                                    <i data-feather="x-circle"></i> Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Seção de Histórico -->
+            <div class="section-content" id="historico-section">
+                <div class="table-container">
+                <div class="table-header">
+                    <h3><i data-feather="dollar-sign"></i> Histórico de Vendas</h3>
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i data-feather="search"></i>
+                            <input type="text" id="searchInput" placeholder="Buscar vendas...">
+                        </div>
+                        <select class="filter-select" id="filterSelect">
+                            <option value="">Todas as vendas</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                            <option value="cancelado">Cancelado</option>
+                        </select>
+                        <button class="btn btn-outline" id="exportBtn">
+                            <i data-feather="download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                <table id="vendasTable">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Cliente</th>
+                            <th>Produtos</th>
+                            <th>Quantidade</th>
+                            <th>Valor Total</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                <i data-feather="dollar-sign"></i>
+                                <h4>Nenhuma venda registrada</h4>
+                                <p>Comece processando vendas no PDV acima.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button id="prevBtn" disabled>
+                        <i data-feather="chevron-left"></i> Anterior
+                    </button>
+                    <span class="record-count" id="recordCount">0 registros</span>
+                    <button id="nextBtn" disabled>
+                        Próximo <i data-feather="chevron-right"></i>
+                    </button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Seção de Relatórios -->
+            <div class="section-content" id="relatorios-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i data-feather="bar-chart-2"></i> Relatórios de Vendas</h2>
+                        <p>Gere relatórios e análises das suas vendas.</p>
+                    </div>
+                    
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="calendar"></i>
+                            </div>
+                            <h3>Vendas por Período</h3>
+                            <p>Relatório de vendas por data</p>
+                            <button class="btn btn-primary" onclick="vendaManager.gerarRelatorioPeriodo()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="user"></i>
+                            </div>
+                            <h3>Vendas por Cliente</h3>
+                            <p>Ranking de clientes por valor</p>
+                            <button class="btn btn-primary" onclick="vendaManager.gerarRelatorioCliente()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="package"></i>
+                            </div>
+                            <h3>Produtos Mais Vendidos</h3>
+                            <p>Ranking de produtos por quantidade</p>
+                            <button class="btn btn-primary" onclick="vendaManager.gerarRelatorioProdutos()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="trending-up"></i>
+                            </div>
+                            <h3>Faturamento Mensal</h3>
+                            <p>Análise de faturamento por mês</p>
+                            <button class="btn btn-primary" onclick="vendaManager.gerarRelatorioFaturamento()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Configurações -->
+            <div class="section-content" id="configuracoes-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i data-feather="settings"></i> Configurações de Vendas</h2>
+                        <p>Configure as opções e preferências para o módulo de vendas.</p>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <h3><i data-feather="hash"></i> Numeração</h3>
+                            <div class="form-group">
+                                <label for="prefixo-codigo">Prefixo do Código</label>
+                                <input type="text" id="prefixo-codigo" value="VEN" maxlength="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="proximo-numero">Próximo Número</label>
+                                <input type="number" id="proximo-numero" value="1" min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="shopping-cart"></i> PDV</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="cliente-obrigatorio" checked>
+                                    Cliente obrigatório
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="desconto-permitido" checked>
+                                    Permitir desconto
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="credit-card"></i> Pagamento</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="pagamento-multiplo" checked>
+                                    Pagamento múltiplo
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="troco-automatico" checked>
+                                    Cálculo automático de troco
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="receipt"></i> Nota Fiscal</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="imprimir-automatico">
+                                    Impressão automática
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="email-automatico">
+                                    Envio automático por email
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline" onclick="vendaManager.resetarConfiguracoes()">
+                            <i data-feather="refresh-cw"></i> Resetar
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="vendaManager.salvarConfiguracoes()">
+                            <i data-feather="save"></i> Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/venda.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
