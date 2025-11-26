@@ -7,7 +7,7 @@ function App() {
   const [pageActive, setPageActive] = useState('dashboard')
 
   return (
-    <div className='w-screen max-w-[1400px] h-screen max-h-[788px] m-auto'>
+    <div className='w-screen max-w-[1400px] h-screen max-h-[788px] m-auto flex'>
       <div className='w-[22%] h-full py-5 pl-5'>
         <div className='h-full w-full rounded-2xl flex flex-col items-center bg-white p-5 gap-10'>
           <p className=' text-[25px] text-[#008080] font-bold'>
@@ -38,7 +38,7 @@ function App() {
           </li>
         </div>
       </div>
-      <div className='w-78% h-full'>
+      <div className='w-[78%] h-full'>
           {pageActive === 'dashboard' ? <DashBoard /> : ''}
       </div>
     </div>
