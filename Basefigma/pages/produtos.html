@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Sistema de Gerenciamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/produto.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i data-feather="shield"></i> Meu Sistema</h3>
+            </div>
+            <ul>
+                <li><a href="dashboard.html"><i data-feather="home"></i><span>Dashboard</span></a></li>
+                <li><a href="clientes.html"><i data-feather="users"></i><span>Clientes</span></a></li>
+                <li><a href="funcionarios.html"><i data-feather="user"></i><span>Funcionários</span></a></li>
+                <li><a href="fornecedores.html"><i data-feather="truck"></i><span>Fornecedores</span></a></li>
+                <li class="active"><a href="produtos.html"><i data-feather="box"></i><span>Produtos</span></a></li>
+                <li><a href="vendas.html"><i data-feather="dollar-sign"></i><span>Vendas</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" onclick="logout()"><i data-feather="log-out"></i><span>Sair</span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header>
+                <h1><i data-feather="box"></i> Produtos</h1>
+                <p>Gerencie seus produtos</p>
+            </header>
+
+            <!-- Navegação por seções -->
+            <div class="section-navigation">
+                <button class="section-btn active" data-section="cadastro">
+                    <i data-feather="box"></i>
+                    <span>Cadastro</span>
+                </button>
+                <button class="section-btn" data-section="lista">
+                    <i data-feather="list"></i>
+                    <span>Lista</span>
+                </button>
+                <button class="section-btn" data-section="relatorios">
+                    <i data-feather="bar-chart-2"></i>
+                    <span>Relatórios</span>
+                </button>
+                <button class="section-btn" data-section="configuracoes">
+                    <i data-feather="settings"></i>
+                    <span>Configurações</span>
+                </button>
+            </div>
+
+            <!-- Seção de Cadastro -->
+            <div class="section-content active" id="cadastro-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Cadastro de Produtos</h2>
+                    <p>Preencha os dados abaixo para registrar um novo produto.</p>
+                </div>
+                
+                <form class="product-form" id="productForm">
+                    <div class="form-section">
+                        <div class="form-group col-span-1">
+                            <label for="codigo">Código</label>
+                            <input type="text" id="codigo" name="codigo" disabled value="PRO0001">
+                        </div>
+                        <div class="form-group col-span-3">
+                            <label for="nome" class="required">Nome do Produto</label>
+                            <input type="text" id="nome" name="nome" required minlength="3" maxlength="100" 
+                                   placeholder="Digite o nome do produto">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="categoria" class="required">Categoria</label>
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Selecione a categoria</option>
+                                <option value="Eletrônicos">Eletrônicos</option>
+                                <option value="Roupas">Roupas</option>
+                                <option value="Casa">Casa</option>
+                                <option value="Esportes">Esportes</option>
+                                <option value="Livros">Livros</option>
+                                <option value="Beleza">Beleza</option>
+                                <option value="Alimentação">Alimentação</option>
+                                <option value="Automotivo">Automotivo</option>
+                                <option value="Ferramentas">Ferramentas</option>
+                                <option value="Saúde">Saúde</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="preco" class="required">Preço</label>
+                            <input type="number" id="preco" name="preco" step="0.01" min="0" 
+                                   placeholder="0,00" required data-tooltip="Preço de venda do produto">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="custo">Custo</label>
+                            <input type="number" id="custo" name="custo" step="0.01" min="0" 
+                                   placeholder="0,00" data-tooltip="Custo de aquisição do produto">
+                        </div>
+                    </div>
+
+                    <div class="form-section-divider">
+                        <h4>Controle de Estoque</h4>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-group col-span-2">
+                            <label for="estoque" class="required">Estoque Atual</label>
+                            <input type="number" id="estoque" name="estoque" min="0" 
+                                   placeholder="0" required>
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="estoqueMinimo" class="required">Estoque Mínimo</label>
+                            <input type="number" id="estoqueMinimo" name="estoqueMinimo" min="0" 
+                                   placeholder="0" required data-tooltip="Quantidade mínima para alerta">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="estoqueMaximo">Estoque Máximo</label>
+                            <input type="number" id="estoqueMaximo" name="estoqueMaximo" min="0" 
+                                   placeholder="0" data-tooltip="Quantidade máxima recomendada">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="unidade">Unidade</label>
+                            <select id="unidade" name="unidade">
+                                <option value="UN">Unidade (UN)</option>
+                                <option value="KG">Quilograma (KG)</option>
+                                <option value="G">Grama (G)</option>
+                                <option value="L">Litro (L)</option>
+                                <option value="ML">Mililitro (ML)</option>
+                                <option value="M">Metro (M)</option>
+                                <option value="CM">Centímetro (CM)</option>
+                                <option value="CX">Caixa (CX)</option>
+                                <option value="PC">Peça (PC)</option>
+                                <option value="DZ">Dúzia (DZ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                                <option value="descontinuado">Descontinuado</option>
+                                <option value="semestoque">Sem Estoque</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section-divider">
+                        <h4>Informações Adicionais</h4>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-group col-span-2">
+                            <label for="codigoBarras">Código de Barras</label>
+                            <input type="text" id="codigoBarras" name="codigoBarras" 
+                                   placeholder="Código EAN/UPC" maxlength="13">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="marca">Marca</label>
+                            <input type="text" id="marca" name="marca" 
+                                   placeholder="Nome da marca" maxlength="50">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="modelo">Modelo</label>
+                            <input type="text" id="modelo" name="modelo" 
+                                   placeholder="Modelo do produto" maxlength="50">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="peso">Peso (kg)</label>
+                            <input type="number" id="peso" name="peso" step="0.001" min="0" 
+                                   placeholder="0,000">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="dimensoes">Dimensões (cm)</label>
+                            <input type="text" id="dimensoes" name="dimensoes" 
+                                   placeholder="L x A x P" maxlength="20">
+                        </div>
+                        <div class="form-group col-span-2">
+                            <label for="fornecedor">Fornecedor</label>
+                            <select id="fornecedor" name="fornecedor">
+                                <option value="">Selecione o fornecedor</option>
+                                <option value="Fornecedor A">Fornecedor A</option>
+                                <option value="Fornecedor B">Fornecedor B</option>
+                                <option value="Fornecedor C">Fornecedor C</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-span-6">
+                            <label for="descricao">Descrição</label>
+                            <textarea id="descricao" name="descricao" rows="3" 
+                                      placeholder="Descrição detalhada do produto" maxlength="500"></textarea>
+                        </div>
+                    </div>
+
+                     <div class="form-footer">
+                        <button type="button" class="btn btn-secondary btn-excluir">Excluir</button>
+                        <button type="button" class="btn btn-outline btn-novo">Novo</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                     </div>
+                </form>
+                </div>
+            </div>
+
+            <!-- Seção de Lista -->
+            <div class="section-content" id="lista-section">
+                <div class="table-container">
+                <div class="table-header">
+                    <h3><i data-feather="box"></i> Lista de Produtos</h3>
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i data-feather="search"></i>
+                            <input type="text" id="searchInput" placeholder="Buscar produtos...">
+                        </div>
+                        <select class="filter-select" id="filterSelect">
+                            <option value="">Todas as categorias</option>
+                            <option value="Eletrônicos">Eletrônicos</option>
+                            <option value="Roupas">Roupas</option>
+                            <option value="Casa">Casa</option>
+                            <option value="Esportes">Esportes</option>
+                            <option value="Livros">Livros</option>
+                            <option value="Beleza">Beleza</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Automotivo">Automotivo</option>
+                            <option value="Ferramentas">Ferramentas</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <button class="btn btn-outline" id="exportBtn">
+                            <i data-feather="download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                <table id="produtosTable">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="empty-state">
+                                <i data-feather="box"></i>
+                                <h4>Nenhum produto cadastrado</h4>
+                                <p>Comece cadastrando seu primeiro produto usando o formulário acima.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button id="prevBtn" disabled>
+                        <i data-feather="chevron-left"></i> Anterior
+                    </button>
+                    <span class="record-count" id="recordCount">0 registros</span>
+                    <button id="nextBtn" disabled>
+                        Próximo <i data-feather="chevron-right"></i>
+                    </button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Seção de Relatórios -->
+            <div class="section-content" id="relatorios-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i data-feather="bar-chart-2"></i> Relatórios de Produtos</h2>
+                        <p>Gere relatórios e análises dos seus produtos.</p>
+                    </div>
+                    
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="box"></i>
+                            </div>
+                            <h3>Produtos por Categoria</h3>
+                            <p>Distribuição por categoria de produtos</p>
+                            <button class="btn btn-primary" onclick="produtoManager.gerarRelatorioCategoria()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="alert-triangle"></i>
+                            </div>
+                            <h3>Estoque Baixo</h3>
+                            <p>Produtos com estoque abaixo do mínimo</p>
+                            <button class="btn btn-primary" onclick="produtoManager.gerarRelatorioEstoqueBaixo()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="dollar-sign"></i>
+                            </div>
+                            <h3>Valor do Estoque</h3>
+                            <p>Valor total do estoque por categoria</p>
+                            <button class="btn btn-primary" onclick="produtoManager.gerarRelatorioValorEstoque()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i data-feather="trending-up"></i>
+                            </div>
+                            <h3>Margem de Lucro</h3>
+                            <p>Análise de margem de lucro dos produtos</p>
+                            <button class="btn btn-primary" onclick="produtoManager.gerarRelatorioMargemLucro()">
+                                <i data-feather="download"></i> Gerar Relatório
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Configurações -->
+            <div class="section-content" id="configuracoes-section">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i data-feather="settings"></i> Configurações de Produtos</h2>
+                        <p>Configure as opções e preferências para o módulo de produtos.</p>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <h3><i data-feather="hash"></i> Numeração</h3>
+                            <div class="form-group">
+                                <label for="prefixo-codigo">Prefixo do Código</label>
+                                <input type="text" id="prefixo-codigo" value="PRO" maxlength="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="proximo-numero">Próximo Número</label>
+                                <input type="number" id="proximo-numero" value="1" min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="package"></i> Produto</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="categoria-obrigatoria" checked>
+                                    Categoria obrigatória
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="preco-obrigatorio" checked>
+                                    Preço obrigatório
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="layers"></i> Estoque</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="estoque-obrigatorio" checked>
+                                    Estoque obrigatório
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="estoque-minimo-obrigatorio" checked>
+                                    Estoque mínimo obrigatório
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3><i data-feather="bell"></i> Alertas</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="alerta-estoque-baixo" checked>
+                                    Alerta de estoque baixo
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="percentual-alerta">Percentual para alerta</label>
+                                <input type="number" id="percentual-alerta" value="20" min="1" max="100">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline" onclick="produtoManager.resetarConfiguracoes()">
+                            <i data-feather="refresh-cw"></i> Resetar
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="produtoManager.salvarConfiguracoes()">
+                            <i data-feather="save"></i> Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        feather.replace();
+        
+        // Funcionalidades específicas para a página de produtos
+        class ProdutoManager {
+            constructor() {
+                this.produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+                this.currentPage = 1;
+                this.itemsPerPage = 10;
+                this.filteredProdutos = [...this.produtos];
+                this.currentSection = 'cadastro';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.setupSectionNavigation();
+                this.loadProdutosTable();
+                this.loadConfiguracoes();
+            }
+
+            setupEventListeners() {
+                // Busca em tempo real
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        this.filterProdutos(e.target.value);
+                    });
+                }
+
+                // Filtro por categoria
+                const filterSelect = document.getElementById('filterSelect');
+                if (filterSelect) {
+                    filterSelect.addEventListener('change', (e) => {
+                        this.filterByCategoria(e.target.value);
+                    });
+                }
+
+                // Botão de exportar
+                const exportBtn = document.getElementById('exportBtn');
+                if (exportBtn) {
+                    exportBtn.addEventListener('click', () => {
+                        this.exportProdutos();
+                    });
+                }
+
+                // Paginação
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                if (prevBtn) prevBtn.addEventListener('click', () => this.previousPage());
+                if (nextBtn) nextBtn.addEventListener('click', () => this.nextPage());
+            }
+
+            setupSectionNavigation() {
+                const sectionBtns = document.querySelectorAll('.section-btn');
+                sectionBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const section = e.currentTarget.dataset.section;
+                        this.showSection(section);
+                    });
+                });
+            }
+
+            showSection(sectionName) {
+                // Remove classe ativa de todos os botões e seções
+                document.querySelectorAll('.section-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.section-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Adiciona classe ativa ao botão e seção selecionados
+                document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+                document.getElementById(`${sectionName}-section`).classList.add('active');
+
+                this.currentSection = sectionName;
+
+                // Carrega dados específicos da seção se necessário
+                if (sectionName === 'lista') {
+                    this.loadProdutosTable();
+                } else if (sectionName === 'relatorios') {
+                    this.loadRelatorios();
+                } else if (sectionName === 'configuracoes') {
+                    this.loadConfiguracoes();
+                }
+            }
+
+            filterProdutos(searchTerm) {
+                const term = searchTerm.toLowerCase();
+                this.filteredProdutos = this.produtos.filter(produto => 
+                    produto.nome.toLowerCase().includes(term) ||
+                    produto.categoria.toLowerCase().includes(term) ||
+                    produto.codigo.toLowerCase().includes(term) ||
+                    produto.marca?.toLowerCase().includes(term)
+                );
+                this.currentPage = 1;
+                this.loadProdutosTable();
+            }
+
+            filterByCategoria(categoria) {
+                if (categoria === '') {
+                    this.filteredProdutos = [...this.produtos];
+                } else {
+                    this.filteredProdutos = this.produtos.filter(produto => produto.categoria === categoria);
+                }
+                this.currentPage = 1;
+                this.loadProdutosTable();
+            }
+
+            loadProdutosTable() {
+                const tbody = document.querySelector('#produtosTable tbody');
+                const pagination = document.getElementById('pagination');
+                const recordCount = document.getElementById('recordCount');
+                
+                if (!tbody) return;
+
+                if (this.filteredProdutos.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="empty-state">
+                                <i data-feather="search"></i>
+                                <h4>Nenhum produto encontrado</h4>
+                                <p>Tente ajustar os filtros de busca.</p>
+                            </td>
+                        </tr>
+                    `;
+                    pagination.style.display = 'none';
+                    recordCount.textContent = '0 registros';
+                    feather.replace();
+                    return;
+                }
+
+                // Paginação
+                const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const pageProdutos = this.filteredProdutos.slice(startIndex, endIndex);
+
+                tbody.innerHTML = pageProdutos.map(produto => {
+                    const estoqueClass = this.getEstoqueClass(produto.estoque, produto.estoqueMinimo);
+                    return `
+                        <tr class="fade-in-up">
+                            <td><strong>${produto.codigo}</strong></td>
+                            <td>${produto.nome}</td>
+                            <td>${produto.categoria}</td>
+                            <td>R$ ${parseFloat(produto.preco || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                            <td class="${estoqueClass}">${produto.estoque} ${produto.unidade || 'UN'}</td>
+                            <td><span class="status-${produto.status}">${produto.status}</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-sm btn-editar" onclick="produtoManager.editProduto(${produto.id})" 
+                                            data-tooltip="Editar produto">
+                                        <i data-feather="edit-2"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-excluir" onclick="produtoManager.deleteProduto(${produto.id})" 
+                                            data-tooltip="Excluir produto">
+                                        <i data-feather="trash-2"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                // Atualizar paginação
+                this.updatePagination();
+                
+                // Atualizar contador
+                recordCount.textContent = `${this.filteredProdutos.length} registro${this.filteredProdutos.length !== 1 ? 's' : ''}`;
+                
+                // Mostrar paginação se necessário
+                pagination.style.display = this.filteredProdutos.length > this.itemsPerPage ? 'flex' : 'none';
+                
+                feather.replace();
+            }
+
+            getEstoqueClass(estoque, estoqueMinimo) {
+                if (estoque <= 0) return 'estoque-critico';
+                if (estoque <= estoqueMinimo) return 'estoque-baixo';
+                return '';
+            }
+
+            updatePagination() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const totalPages = Math.ceil(this.filteredProdutos.length / this.itemsPerPage);
+
+                if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+                if (nextBtn) nextBtn.disabled = this.currentPage === totalPages;
+            }
+
+            previousPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    this.loadProdutosTable();
+                }
+            }
+
+            nextPage() {
+                const totalPages = Math.ceil(this.filteredProdutos.length / this.itemsPerPage);
+                if (this.currentPage < totalPages) {
+                    this.currentPage++;
+                    this.loadProdutosTable();
+                }
+            }
+
+            editProduto(id) {
+                const produto = this.produtos.find(p => p.id === id);
+                if (produto) {
+                    // Preencher formulário com dados do produto
+                    Object.keys(produto).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = produto[key];
+                        }
+                    });
+                    
+                    // Scroll para o formulário
+                    document.querySelector('.form-container').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                    
+                    // Mostrar alerta
+                    this.showAlert('Produto carregado para edição', 'info');
+                }
+            }
+
+            deleteProduto(id) {
+                if (confirm('Tem certeza que deseja excluir este produto?')) {
+                    this.produtos = this.produtos.filter(p => p.id !== id);
+                    localStorage.setItem('produtos', JSON.stringify(this.produtos));
+                    this.filteredProdutos = this.filteredProdutos.filter(p => p.id !== id);
+                    this.loadProdutosTable();
+                    this.showAlert('Produto excluído com sucesso!', 'success');
+                }
+            }
+
+            exportProdutos() {
+                const data = this.filteredProdutos.map(produto => ({
+                    'Código': produto.codigo,
+                    'Nome': produto.nome,
+                    'Categoria': produto.categoria,
+                    'Preço': produto.preco,
+                    'Custo': produto.custo || 0,
+                    'Estoque': produto.estoque,
+                    'Estoque Mínimo': produto.estoqueMinimo,
+                    'Unidade': produto.unidade || 'UN',
+                    'Status': produto.status,
+                    'Marca': produto.marca || '',
+                    'Modelo': produto.modelo || '',
+                    'Fornecedor': produto.fornecedor || ''
+                }));
+
+                const csv = this.convertToCSV(data);
+                this.downloadCSV(csv, 'produtos.csv');
+                this.showAlert('Dados exportados com sucesso!', 'success');
+            }
+
+            convertToCSV(data) {
+                const headers = Object.keys(data[0]);
+                const csvContent = [
+                    headers.join(','),
+                    ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
+                ].join('\n');
+                return csvContent;
+            }
+
+            downloadCSV(csv, filename) {
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            showAlert(message, type = 'info') {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.textContent = message;
+                alert.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+
+                const colors = {
+                    success: '#16a34a',
+                    error: '#dc2626',
+                    warning: '#d97706',
+                    info: '#0ea5e9'
+                };
+                alert.style.backgroundColor = colors[type] || colors.info;
+
+                document.body.appendChild(alert);
+
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            }
+
+            // === MÉTODOS PARA RELATÓRIOS ===
+            loadRelatorios() {
+                console.log('Carregando relatórios...');
+            }
+
+            gerarRelatorioCategoria() {
+                const relatorio = this.produtos.reduce((acc, produto) => {
+                    const categoria = produto.categoria || 'Não informado';
+                    acc[categoria] = (acc[categoria] || 0) + 1;
+                    return acc;
+                }, {});
+
+                const csv = Object.entries(relatorio)
+                    .map(([categoria, quantidade]) => `${categoria},${quantidade}`)
+                    .join('\n');
+                
+                const csvContent = 'Categoria,Quantidade\n' + csv;
+                this.downloadCSV(csvContent, 'produtos_por_categoria.csv');
+                this.showAlert('Relatório de produtos por categoria gerado!', 'success');
+            }
+
+            gerarRelatorioEstoqueBaixo() {
+                const produtosEstoqueBaixo = this.produtos.filter(produto => 
+                    produto.estoque <= produto.estoqueMinimo
+                );
+
+                const csv = produtosEstoqueBaixo.map(produto => 
+                    `${produto.codigo},${produto.nome},${produto.categoria},${produto.estoque},${produto.estoqueMinimo}`
+                ).join('\n');
+                
+                const csvContent = 'Código,Nome,Categoria,Estoque Atual,Estoque Mínimo\n' + csv;
+                this.downloadCSV(csvContent, 'produtos_estoque_baixo.csv');
+                this.showAlert('Relatório de produtos com estoque baixo gerado!', 'success');
+            }
+
+            gerarRelatorioValorEstoque() {
+                const valorPorCategoria = this.produtos.reduce((acc, produto) => {
+                    const categoria = produto.categoria || 'Não informado';
+                    const valor = parseFloat(produto.preco || 0) * parseInt(produto.estoque || 0);
+                    acc[categoria] = (acc[categoria] || 0) + valor;
+                    return acc;
+                }, {});
+
+                const csv = Object.entries(valorPorCategoria)
+                    .map(([categoria, valor]) => `${categoria},${valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`)
+                    .join('\n');
+                
+                const csvContent = 'Categoria,Valor Total do Estoque\n' + csv;
+                this.downloadCSV(csvContent, 'valor_estoque_por_categoria.csv');
+                this.showAlert('Relatório de valor do estoque gerado!', 'success');
+            }
+
+            gerarRelatorioMargemLucro() {
+                const produtosComMargem = this.produtos.filter(produto => 
+                    produto.preco && produto.custo
+                ).map(produto => {
+                    const preco = parseFloat(produto.preco);
+                    const custo = parseFloat(produto.custo);
+                    const margem = ((preco - custo) / preco) * 100;
+                    return {
+                        ...produto,
+                        margem: margem.toFixed(2)
+                    };
+                });
+
+                const csv = produtosComMargem.map(produto => 
+                    `${produto.codigo},${produto.nome},${produto.categoria},${produto.preco},${produto.custo},${produto.margem}%`
+                ).join('\n');
+                
+                const csvContent = 'Código,Nome,Categoria,Preço,Custo,Margem de Lucro\n' + csv;
+                this.downloadCSV(csvContent, 'margem_lucro_produtos.csv');
+                this.showAlert('Relatório de margem de lucro gerado!', 'success');
+            }
+
+            // === MÉTODOS PARA CONFIGURAÇÕES ===
+            loadConfiguracoes() {
+                const configs = JSON.parse(localStorage.getItem('produtoConfigs')) || {
+                    prefixoCodigo: 'PRO',
+                    proximoNumero: 1,
+                    categoriaObrigatoria: true,
+                    precoObrigatorio: true,
+                    estoqueObrigatorio: true,
+                    estoqueMinimoObrigatorio: true,
+                    alertaEstoqueBaixo: true,
+                    percentualAlerta: 20
+                };
+
+                // Aplica as configurações nos campos
+                Object.keys(configs).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = configs[key];
+                        } else {
+                            element.value = configs[key];
+                        }
+                    }
+                });
+            }
+
+            salvarConfiguracoes() {
+                const configs = {
+                    prefixoCodigo: document.getElementById('prefixo-codigo').value,
+                    proximoNumero: parseInt(document.getElementById('proximo-numero').value),
+                    categoriaObrigatoria: document.getElementById('categoria-obrigatoria').checked,
+                    precoObrigatorio: document.getElementById('preco-obrigatorio').checked,
+                    estoqueObrigatorio: document.getElementById('estoque-obrigatorio').checked,
+                    estoqueMinimoObrigatorio: document.getElementById('estoque-minimo-obrigatorio').checked,
+                    alertaEstoqueBaixo: document.getElementById('alerta-estoque-baixo').checked,
+                    percentualAlerta: parseInt(document.getElementById('percentual-alerta').value)
+                };
+
+                localStorage.setItem('produtoConfigs', JSON.stringify(configs));
+                this.showAlert('Configurações salvas com sucesso!', 'success');
+            }
+
+            resetarConfiguracoes() {
+                if (confirm('Tem certeza que deseja resetar as configurações para os valores padrão?')) {
+                    localStorage.removeItem('produtoConfigs');
+                    this.loadConfiguracoes();
+                    this.showAlert('Configurações resetadas!', 'info');
+                }
+            }
+        }
+
+        // Inicializar o gerenciador de produtos
+        let produtoManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            produtoManager = new ProdutoManager();
+        });
+    </script>
+</body>
+</html>

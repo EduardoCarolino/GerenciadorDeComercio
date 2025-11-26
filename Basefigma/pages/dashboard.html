@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Gerenciamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i data-feather="shield"></i> Meu Sistema</h3>
+            </div>
+            <ul>
+                <li class="active"><a href="dashboard.html"><i data-feather="home"></i><span>Dashboard</span></a></li>
+                <li><a href="clientes.html"><i data-feather="users"></i><span>Clientes</span></a></li>
+                <li><a href="funcionarios.html"><i data-feather="user"></i><span>Funcionários</span></a></li>
+                <li><a href="fornecedores.html"><i data-feather="truck"></i><span>Fornecedores</span></a></li>
+                <li><a href="produtos.html"><i data-feather="box"></i><span>Produtos</span></a></li>
+                <li><a href="vendas.html"><i data-feather="dollar-sign"></i><span>Vendas</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" onclick="logout()"><i data-feather="log-out"></i><span>Sair</span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header>
+                <h1>Dashboard</h1>
+                <p>Visão geral do seu negócio</p>
+            </header>
+            
+            <!-- Conteúdo dinâmico será carregado aqui -->
+            <div id="dynamic-content">
+                <section class="kpi-cards">
+                <div class="card">
+                    <div class="card-icon" style="background-color: #e0f7fa;">
+                        <i data-feather="dollar-sign" style="color: #00796b;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Vendas Hoje</h4>
+                        <p>R$ 0,00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background-color: #fff3e0;">
+                        <i data-feather="users" style="color: #f57c00;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Novos Clientes</h4>
+                        <p>0</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background-color: #e8f5e9;">
+                        <i data-feather="shopping-cart" style="color: #388e3c;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Pedidos Pendentes</h4>
+                        <p>0</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background-color: #fce4ec;">
+                        <i data-feather="alert-triangle" style="color: #d32f2f;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Estoque Baixo</h4>
+                        <p>0 produtos</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="chart-container">
+                    <h3>Vendas da Semana</h3>
+                    <div style="display: flex; align-items: center; justify-content: center; height: 200px; background-color: var(--secondary-color); border-radius: 8px; margin-top: 20px;">
+                        <p style="color: var(--text-light);">Gráfico de vendas será implementado aqui</p>
+                    </div>
+                </div>
+                <div class="recent-activities">
+                    <h3>Atividades Recentes</h3>
+                    <table id="recentActivities">
+                        <thead>
+                            <tr>
+                                <th>ID Venda</th>
+                                <th>Cliente</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--text-light); padding: 40px;">
+                                    Nenhuma venda registrada ainda
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="kpi-cards mt-30">
+                <div class="card">
+                    <div class="card-icon" style="background-color: #f3e8ff;">
+                        <i data-feather="trending-up" style="color: #7c3aed;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Receita Total</h4>
+                        <p>R$ 0,00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background-color: #ecfdf5;">
+                        <i data-feather="package" style="color: #059669;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Total de Produtos</h4>
+                        <p>0</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background-color: #fef3c7;">
+                        <i data-feather="user-check" style="color: #d97706;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Funcionários Ativos</h4>
+                        <p>0</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background-color: #dbeafe;">
+                        <i data-feather="truck" style="color: #2563eb;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h4>Fornecedores</h4>
+                        <p>0</p>
+                    </div>
+                </div>
+            </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        feather.replace();
+        
+        // Inicializar o dashboard quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.sistema) {
+                // Carrega os dados do dashboard
+                window.sistema.loadDashboardData();
+            }
+        });
+    </script>
+</body>
+</html>
