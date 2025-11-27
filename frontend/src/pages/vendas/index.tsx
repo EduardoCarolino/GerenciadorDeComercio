@@ -11,8 +11,8 @@ export function Vendas() {
     <div className="w-full h-full pt-5 px-8 pb-8 overflow-y-auto">
       <div className="mb-4 flex-shrink-0">
         <div className="mb-4">
-          <h1 className="text-5xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600 text-base">Visão geral do seu negócio.</p>
+          <h1 className="text-5xl font-bold text-gray-900 mb-2">Vendas</h1>
+          <p className="text-gray-600 text-base">Gerencie suas vendas.</p>
         </div>
         <div className="bg-white rounded-lg py-1 px-4 flex gap-3">
           <button 
