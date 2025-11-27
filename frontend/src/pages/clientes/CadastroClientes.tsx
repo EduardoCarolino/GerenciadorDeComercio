@@ -173,6 +173,33 @@ export function CadastroClientes({ formData, onFormDataChange }: CadastroCliente
             </div>
           </div>
         </div>
+
+        <div className="flex justify-end gap-4 pt-4 mt-6">
+          <button
+            type="button"
+            onClick={() => {
+              onFormDataChange({
+                nomeCompleto: '',
+                celular: '',
+                endereco: '',
+                cidade: '',
+                bairro: '',
+                email: '',
+                telefoneFixo: '',
+                uf: ''
+              });
+            }}
+            className="px-6 py-2 border rounded-lg hover:bg-gray-50"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            className="px-6 py-2 bg-[#008080] text-white rounded-lg hover:bg-[#006666]"
+          >
+            Salvar Cliente
+          </button>
+        </div>
       </form>
     </>
   );
