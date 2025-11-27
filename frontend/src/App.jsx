@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { Box, CircleDollarSign, CircleUser, House, Settings, Truck, User } from 'lucide-react';
+import { Box, CircleDollarSign, CircleUser, House, Settings, Truck, User, Users, LogOut } from 'lucide-react';
 import { useRoutes } from 'react-router-dom';
 import { DashBoard } from './pages/dashboard';
+
+import { Fornecedores } from './pages/fornecedores';
 
 function App() {
   const [pageActive, setPageActive] = useState('dashboard')
@@ -14,32 +16,36 @@ function App() {
             Meu sistema
           </p>
           <li className='w-full list-none gap-2 flex flex-col'>
-            <ul className={`${pageActive === 'dashboard' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px]  flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('dashboard')}}>
-              <House className='w-[20px]'/> DashBoard
+            <ul className={`${pageActive === 'dashboard' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px]  flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('dashboard') }}>
+              <House className='w-[20px]' /> DashBoard
             </ul>
-            <ul className={`${pageActive === 'clientes' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('clientes')}}>
-              <User className='w-[20px]'/> Clientes
+            <ul className={`${pageActive === 'clientes' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('clientes') }}>
+              <User className='w-[20px]' /> Clientes
             </ul>
-            <ul className={`${pageActive === 'funcionarios' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('funcionarios')}}>
-              <CircleUser className='w-[20px]'/> Funcionários
+            <ul className={`${pageActive === 'funcionarios' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('funcionarios') }}>
+              <CircleUser className='w-[20px]' /> Funcionários
             </ul>
-            <ul className={`${pageActive === 'fornecedores' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('fornecedores')}}>
-              <Truck className='w-[20px]'/> Fornecedores
+            <ul className={`${pageActive === 'fornecedores' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('fornecedores') }}>
+              <Truck className='w-[20px]' /> Fornecedores
             </ul>
-            <ul className={`${pageActive === 'produtos' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('produtos')}}>
-              <Box className='w-[20px]'/> Produtos
+            <ul className={`${pageActive === 'produtos' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('produtos') }}>
+              <Box className='w-[20px]' /> Produtos
             </ul>
-            <ul className={`${pageActive === 'vendas' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('vendas')}}>
-              <CircleDollarSign className='w-[20px]'/> Vendas
+            <ul className={`${pageActive === 'vendas' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('vendas') }}>
+              <CircleDollarSign className='w-[20px]' /> Vendas
             </ul>
-            <ul className={`${pageActive === 'configuracoes' ? 'bg-[#008080] text-white ' : 'bg-white' } rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => {setPageActive('configuracoes')}}>
-              <Settings className='w-[20px]'/> Configurações
+            <ul className={`${pageActive === 'configuracoes' ? 'bg-[#008080] text-white ' : 'bg-white'} rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer`} onClick={() => { setPageActive('configuracoes') }}>
+              <Settings className='w-[20px]' /> Configurações
             </ul>
           </li>
+          <button className='w-full bg-red-500 text-white rounded-lg pl-5 h-[30px] flex items-center gap-2 cursor-pointer hover:bg-red-600 transition-colors justify-center'>
+            <LogOut className='w-[20px]' /> Sair
+          </button>
         </div>
       </div>
       <div className='w-[78%] h-full'>
-          {pageActive === 'dashboard' ? <DashBoard /> : ''}
+        {pageActive === 'dashboard' ? <DashBoard /> : ''}
+        {pageActive === 'fornecedores' ? <Fornecedores /> : ''}
       </div>
     </div>
   )
