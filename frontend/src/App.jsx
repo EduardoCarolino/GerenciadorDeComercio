@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Box, CircleDollarSign, CircleUser, House, Settings, Truck, User, Users, LogOut } from 'lucide-react';
 import { useRoutes } from 'react-router-dom';
 import { DashBoard } from './pages/dashboard';
+import { Clientes } from './pages/clientes/index';
+import { Vendas } from './pages/vendas/index';
+import { Logo } from './components/Logo';
 
 import { Fornecedores } from './pages/fornecedores';
 
