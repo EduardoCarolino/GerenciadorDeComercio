@@ -1,5 +1,7 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import { criarUmProduto } from '../../actions/actionProdutos';
+import { Produto } from '.';
 
 interface FormData {
   codigo: string;
@@ -51,6 +53,7 @@ export function CadastroProdutos({ formData, onFormDataChange }: CadastroProduto
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Dados do produto:', formData);
+    // criarUmProduto(formData)
     // Aqui você pode adicionar a lógica para enviar os dados para o backend
   };
 

@@ -7,7 +7,7 @@ class Cliente(models.Model):
     
     # Dados Pessoais
     # Convertendo "nomeCompleto" para snake_case
-    nome_completo = models.CharField(max_length=250)
+    nomeCompleto = models.CharField(max_length=250)
     email = models.EmailField(max_length=250, unique=True)
     
     # Contato

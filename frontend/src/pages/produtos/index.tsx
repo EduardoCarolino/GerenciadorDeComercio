@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { CadastroProdutos } from './CadastroProdutos';
 import { ListaProdutos } from './ListaProdutos';
 import { RelatoriosProdutos } from './RelatoriosProdutos';
+import { buscarTodosProdutos } from '../../actions/actionProdutos';
 
-interface Produto {
+export interface Produto {
   id: number;
   codigo: string;
   nome: string;
@@ -45,63 +46,27 @@ export function Produtos() {
   });
 
   // Dados mockados para a lista
-  const [produtos] = useState<Produto[]>([
-    {
-      id: 1,
-      codigo: 'PROD-001',
-      nome: 'Notebook Dell Inspiron',
-      categoria: 'Eletrônicos',
-      precoVenda: 3299.99,
-      estoque: 15,
-      estoqueMinimo: 5,
-      unidade: 'UN',
-      fornecedor: 'Tech Solutions'
-    },
-    {
-      id: 2,
-      codigo: 'PROD-002',
-      nome: 'Camiseta Básica Branca',
-      categoria: 'Roupas',
-      precoVenda: 29.90,
-      estoque: 50,
-      estoqueMinimo: 20,
-      unidade: 'UN',
-      fornecedor: 'Moda Fashion'
-    },
-    {
-      id: 3,
-      codigo: 'PROD-003',
-      nome: 'Arroz 5kg',
-      categoria: 'Alimentos',
-      precoVenda: 18.50,
-      estoque: 3,
-      estoqueMinimo: 10,
-      unidade: 'UN',
-      fornecedor: 'Distribuidora Alimentos'
-    },
-    {
-      id: 4,
-      codigo: 'PROD-004',
-      nome: 'Refrigerante Coca-Cola 2L',
-      categoria: 'Bebidas',
-      precoVenda: 7.99,
-      estoque: 120,
-      estoqueMinimo: 30,
-      unidade: 'UN',
-      fornecedor: 'Bebidas Brasil'
-    },
-    {
-      id: 5,
-      codigo: 'PROD-005',
-      nome: 'Sofá Retrátil 3 Lugares',
-      categoria: 'Casa e Decoração',
-      precoVenda: 1899.00,
-      estoque: 2,
-      estoqueMinimo: 3,
-      unidade: 'UN',
-      fornecedor: 'Móveis Premium'
-    }
-  ]);
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  // Função auxiliar para buscar e atualizar
+  async function carregarDados() {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await buscarTodosProdutos(); 
+      console.log(dados)
+      setProdutos(dados); // 2. ATUALIZA O ESTADO
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
 
   return (
     <div className="w-full h-full pt-5 px-8 pb-8 overflow-y-auto">
@@ -123,7 +88,10 @@ export function Produtos() {
             Produtos
           </button>
           <button 
-            onClick={() => setViewMode('lista')}
+            onClick={() => {
+              setViewMode('lista');
+              carregarDados();
+            }}
             className={`px-6 py-3 rounded-full flex items-center gap-2 transition-colors font-normal text-sm ${
               viewMode === 'lista' 
                 ? 'bg-[#008080] text-white hover:bg-[#006666]' 

@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { CadastroClientes } from './CadastroClientes';
 import { ListaClientes } from './ListaClientes';
 import { RelatoriosClientes } from './RelatoriosClientes';
+import { buscarTodosClientes } from '../../actions/actionClientes';
 
 export interface Cliente {
   id: number;
@@ -29,12 +30,9 @@ interface FormData {
   uf: string;
 }
 
-interface clienteProps {
-    clientes: Cliente[]    
-}
-
-export function IndexClientes ({clientes}: clienteProps) {
+export function Clientes () {
   const [viewMode, setViewMode] = useState<'cadastro' | 'lista' | 'relatorios'>('cadastro');
+  const [clientes, setDadosClietes] = useState<Cliente[]>([]);
   const [formData, setFormData] = useState<FormData>({
     nomeCompleto: '',
     celular: '',
@@ -45,6 +43,26 @@ export function IndexClientes ({clientes}: clienteProps) {
     telefoneFixo: '',
     uf: ''
   });
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  // Função auxiliar para buscar e atualizar
+  async function carregarDados() {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await buscarTodosClientes(); 
+      console.log(dados)
+      setDadosClietes(dados); // 2. ATUALIZA O ESTADO
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
 
   // Dados mockados para a lista
 
@@ -104,7 +122,12 @@ export function IndexClientes ({clientes}: clienteProps) {
             Clientes
           </button>
           <button 
-            onClick={() => setViewMode('lista')}
+            onClick={() => {
+              setViewMode('lista')
+              carregarDados(); // Chama a função que busca e atualiza
+              // const returnado = await getAllClientes()
+              // console.log(returnado)
+            }}
             className={`px-6 py-3 rounded-full flex items-center gap-2 transition-colors font-normal text-sm ${
               viewMode === 'lista' 
                 ? 'bg-[#008080] text-white hover:bg-[#006666]' 
@@ -115,7 +138,7 @@ export function IndexClientes ({clientes}: clienteProps) {
             Lista
           </button>
           <button 
-            onClick={() => setViewMode('relatorios')}
+            onClick={async () => {setViewMode('relatorios')}}
             className={`px-6 py-3 rounded-full flex items-center gap-2 transition-colors font-normal text-sm ${
               viewMode === 'relatorios' 
                 ? 'bg-[#008080] text-white hover:bg-[#006666]' 

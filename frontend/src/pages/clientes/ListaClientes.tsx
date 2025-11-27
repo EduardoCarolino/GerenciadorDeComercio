@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Download, Edit, Trash2, ChevronDown } from 'lucide-react';
+// import { Cliente } from './indexCliente';
 
 interface Cliente {
   id: number;

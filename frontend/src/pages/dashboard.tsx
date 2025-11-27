@@ -2,25 +2,39 @@ import { FunctionSquare } from "lucide-react"
 import { ServiceCliente } from "../service/clientes"
 import { Cliente } from "./clientes/indexCliente"
 
-async function req() {
-    const clientes: Cliente[] = await ServiceCliente.getAllClientes()
-    console.log(clientes)
+// async function req() {
+//     const clientes: Cliente[] = await ServiceCliente.getAllClientes()
+//     console.log(clientes)
 
-    ServiceCliente.createCliete(  
-        {
-      id: 2,
-      nomeCompleto: 'Maria Santos',
-      email: 'maria@email.com',
-      celular: '(21) 9 9876-5432',
-      telefoneFixo: '(21) 2345-6789',
-      endereco: 'Av. Principal, 456',
-      bairro: 'Copacabana',
-      cidade: 'Rio de Janeiro',
-      uf: 'RJ'
-    },)
-}
+//     ServiceCliente.createCliete(  
+//         {
+//       id: 2,
+//       nomeCompleto: 'Maria Santos',
+//       email: 'maria@email.com',
+//       celular: '(21) 9 9876-5432',
+//       telefoneFixo: '(21) 2345-6789',
+//       endereco: 'Av. Principal, 456',
+//       bairro: 'Copacabana',
+//       cidade: 'Rio de Janeiro',
+//       uf: 'RJ'
+//     },)
 
-req()
+//     ServiceCliente.updateCliente({
+//       id: 2,
+//       nomeCompleto: 'Maria Santosssss',
+//       email: 'maria@email.com',
+//       celular: '(21) 9 9876-5432',
+//       telefoneFixo: '(21) 2345-6789',
+//       endereco: 'Av. Principal, 456',
+//       bairro: 'Copacabana',
+//       cidade: 'Rio de Janeiro',
+//       uf: 'RJ'
+//     })
+
+//     ServiceCliente.deleteCliente(clientes[0].id)
+// }
+
+// req()
 
 export function DashBoard() {
     const mockDadosDashBoard = {

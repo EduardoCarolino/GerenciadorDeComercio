@@ -12,11 +12,43 @@ async function getAllClientes(){
 
 async function createCliete(bodyCliente: Cliente) {
     const response = await fetch('http://127.0.0.1:8000/clientes/', {
-      method: 'POST', // 1. Tens de especificar que é um POST
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // 2. O nome correto do header e o valor
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(bodyCliente) // 3. O corpo precisa ser transformado em texto (string)
+      body: JSON.stringify(bodyCliente)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
+    }
+
+    return await response.json()
+}
+
+async function updateCliente(bodyCliente: Cliente) {
+    const response = await fetch('http://127.0.0.1:8000/clientes/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(bodyCliente)
+    });
+
+    console.log(response)
+
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
+    }
+}
+
+async function deleteCliente(email: string) {
+    const responseGet = await fetch(`http://127.0.0.1:8000/clientes?email=${email}`);
+
+    const data: Cliente = await responseGet.json() 
+
+    const response = await fetch(`http://127.0.0.1:8000/clientes/${data.id}`, {
+        method: 'DELETE'
     });
 
     console.log(response)
@@ -29,4 +61,6 @@ async function createCliete(bodyCliente: Cliente) {
 export const ServiceCliente = {
     getAllClientes,
     createCliete,
+    updateCliente,
+    deleteCliente,
 }
