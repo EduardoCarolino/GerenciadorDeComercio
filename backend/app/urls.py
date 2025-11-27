@@ -20,10 +20,16 @@ from django.urls import path, include
 from rest_framework import routers
 
 from clientes.api import viewsets as clienteviewsets
+from produtos.api import viewsets as produtosviewsets
+from fornecedores.api import viewsets as fornecedoreviewsets
+from vendas.api import viewsets as vendasviewsets
 
 rounte = routers.DefaultRouter()
 
 rounte.register(r'clientes', clienteviewsets.ClientesViewSet, basename='Clientes')
+rounte.register(r'produtos', produtosviewsets.ProdutosViewSet, basename='Produtos')
+rounte.register(r'fornecedores', fornecedoreviewsets.FornecedoresViewSet, basename='Fornecedores')
+rounte.register(r'vendas', vendasviewsets.VendasViewSet, basename='Vendas')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
