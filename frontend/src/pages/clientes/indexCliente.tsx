@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+'use client'
+
+import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { CadastroClientes } from './CadastroClientes';
 import { ListaClientes } from './ListaClientes';
 import { RelatoriosClientes } from './RelatoriosClientes';
 
-interface Cliente {
+export interface Cliente {
   id: number;
   nomeCompleto: string;
   email: string;
@@ -27,7 +29,11 @@ interface FormData {
   uf: string;
 }
 
-export function Clientes() {
+interface clienteProps {
+    clientes: Cliente[]    
+}
+
+export function IndexClientes ({clientes}: clienteProps) {
   const [viewMode, setViewMode] = useState<'cadastro' | 'lista' | 'relatorios'>('cadastro');
   const [formData, setFormData] = useState<FormData>({
     nomeCompleto: '',
@@ -41,45 +47,46 @@ export function Clientes() {
   });
 
   // Dados mockados para a lista
-  const [clientes] = useState<Cliente[]>([
-    {
-      id: 1,
-      nomeCompleto: 'João Silva',
-      email: 'joao@email.com',
-      celular: '(11) 9 1234-5678',
-      telefoneFixo: '(11) 3456-7890',
-      endereco: 'Rua das Flores, 123',
-      bairro: 'Centro',
-      cidade: 'São Paulo',
-      uf: 'SP'
-    },
-    {
-      id: 2,
-      nomeCompleto: 'Maria Santos',
-      email: 'maria@email.com',
-      celular: '(21) 9 9876-5432',
-      telefoneFixo: '(21) 2345-6789',
-      endereco: 'Av. Principal, 456',
-      bairro: 'Copacabana',
-      cidade: 'Rio de Janeiro',
-      uf: 'RJ'
-    },
-    {
-      id: 3,
-      nomeCompleto: 'Pedro Oliveira',
-      email: 'pedro@email.com',
-      celular: '(31) 9 8765-4321',
-      telefoneFixo: '(31) 3456-7890',
-      endereco: 'Rua do Comércio, 789',
-      bairro: 'Savassi',
-      cidade: 'Belo Horizonte',
-      uf: 'MG'
-    }
-  ]);
+
+  // const [clientes] = useState<Cliente[]>([
+  //   {
+  //     id: 1,
+  //     nomeCompleto: 'João Silva',
+  //     email: 'joao@email.com',
+  //     celular: '(11) 9 1234-5678',
+  //     telefoneFixo: '(11) 3456-7890',
+  //     endereco: 'Rua das Flores, 123',
+  //     bairro: 'Centro',
+  //     cidade: 'São Paulo',
+  //     uf: 'SP'
+  //   },
+  //   {
+  //     id: 2,
+  //     nomeCompleto: 'Maria Santos',
+  //     email: 'maria@email.com',
+  //     celular: '(21) 9 9876-5432',
+  //     telefoneFixo: '(21) 2345-6789',
+  //     endereco: 'Av. Principal, 456',
+  //     bairro: 'Copacabana',
+  //     cidade: 'Rio de Janeiro',
+  //     uf: 'RJ'
+  //   },
+  //   {
+  //     id: 3,
+  //     nomeCompleto: 'Pedro Oliveira',
+  //     email: 'pedro@email.com',
+  //     celular: '(31) 9 8765-4321',
+  //     telefoneFixo: '(31) 3456-7890',
+  //     endereco: 'Rua do Comércio, 789',
+  //     bairro: 'Savassi',
+  //     cidade: 'Belo Horizonte',
+  //     uf: 'MG'
+  //   }
+  // ]);
 
   return (
-    <div className="w-full h-full pt-5 px-8 pb-8 overflow-y-auto">
-      <div className="mb-4 flex-shrink-0">
+    <div className="w-full h-full pt-5 px-8 pb-8 overflow-hidden">
+      <div className="mb-4">
         <div className="mb-4">
           <h1 className="text-5xl font-bold text-gray-900 mb-2">Dashboard</h1>
           <p className="text-gray-600 text-base">Visão geral do seu negócio.</p>
