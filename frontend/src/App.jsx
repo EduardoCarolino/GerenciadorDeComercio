@@ -4,6 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import { DashBoard } from './pages/dashboard';
 import { Clientes } from './pages/clientes/index';
 import { Vendas } from './pages/vendas/index';
+import { Produtos } from './pages/produtos/index';
 import { Logo } from './components/Logo';
 
 import { Fornecedores } from './pages/fornecedores';
@@ -48,7 +49,10 @@ function App() {
       </div>
       <div className='w-[78%] h-full'>
         {pageActive === 'dashboard' ? <DashBoard /> : ''}
+        {pageActive === 'clientes' ? <Clientes /> : ''}
         {pageActive === 'fornecedores' ? <Fornecedores /> : ''}
+        {pageActive === 'produtos' ? <Produtos /> : ''}
+        {pageActive === 'vendas' ? <Vendas /> : ''}
       </div>
     </div>
   )

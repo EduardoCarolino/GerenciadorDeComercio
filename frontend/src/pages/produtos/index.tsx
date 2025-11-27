@@ -1,79 +1,105 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
-import { CadastroClientes } from './CadastroClientes';
-import { ListaClientes } from './ListaClientes';
-import { RelatoriosClientes } from './RelatoriosClientes';
+import { CadastroProdutos } from './CadastroProdutos';
+import { ListaProdutos } from './ListaProdutos';
+import { RelatoriosProdutos } from './RelatoriosProdutos';
 
-interface Cliente {
+interface Produto {
   id: number;
-  nomeCompleto: string;
-  email: string;
-  celular: string;
-  telefoneFixo: string;
-  endereco: string;
-  bairro: string;
-  cidade: string;
-  uf: string;
+  codigo: string;
+  nome: string;
+  categoria: string;
+  precoVenda: number;
+  estoque: number;
+  estoqueMinimo: number;
+  unidade: string;
+  fornecedor: string;
 }
 
 interface FormData {
-  nomeCompleto: string;
-  celular: string;
-  endereco: string;
-  cidade: string;
-  bairro: string;
-  email: string;
-  telefoneFixo: string;
-  uf: string;
+  codigo: string;
+  nome: string;
+  descricao: string;
+  categoria: string;
+  precoCompra: string;
+  precoVenda: string;
+  estoque: string;
+  estoqueMinimo: string;
+  unidade: string;
+  fornecedor: string;
 }
 
-export function Clientes() {
+export function Produtos() {
   const [viewMode, setViewMode] = useState<'cadastro' | 'lista' | 'relatorios'>('cadastro');
   const [formData, setFormData] = useState<FormData>({
-    nomeCompleto: '',
-    celular: '',
-    endereco: '',
-    cidade: '',
-    bairro: '',
-    email: '',
-    telefoneFixo: '',
-    uf: ''
+    codigo: '',
+    nome: '',
+    descricao: '',
+    categoria: '',
+    precoCompra: '',
+    precoVenda: '',
+    estoque: '',
+    estoqueMinimo: '',
+    unidade: '',
+    fornecedor: ''
   });
 
   // Dados mockados para a lista
-  const [clientes] = useState<Cliente[]>([
+  const [produtos] = useState<Produto[]>([
     {
       id: 1,
-      nomeCompleto: 'João Silva',
-      email: 'joao@email.com',
-      celular: '(11) 9 1234-5678',
-      telefoneFixo: '(11) 3456-7890',
-      endereco: 'Rua das Flores, 123',
-      bairro: 'Centro',
-      cidade: 'São Paulo',
-      uf: 'SP'
+      codigo: 'PROD-001',
+      nome: 'Notebook Dell Inspiron',
+      categoria: 'Eletrônicos',
+      precoVenda: 3299.99,
+      estoque: 15,
+      estoqueMinimo: 5,
+      unidade: 'UN',
+      fornecedor: 'Tech Solutions'
     },
     {
       id: 2,
-      nomeCompleto: 'Maria Santos',
-      email: 'maria@email.com',
-      celular: '(21) 9 9876-5432',
-      telefoneFixo: '(21) 2345-6789',
-      endereco: 'Av. Principal, 456',
-      bairro: 'Copacabana',
-      cidade: 'Rio de Janeiro',
-      uf: 'RJ'
+      codigo: 'PROD-002',
+      nome: 'Camiseta Básica Branca',
+      categoria: 'Roupas',
+      precoVenda: 29.90,
+      estoque: 50,
+      estoqueMinimo: 20,
+      unidade: 'UN',
+      fornecedor: 'Moda Fashion'
     },
     {
       id: 3,
-      nomeCompleto: 'Pedro Oliveira',
-      email: 'pedro@email.com',
-      celular: '(31) 9 8765-4321',
-      telefoneFixo: '(31) 3456-7890',
-      endereco: 'Rua do Comércio, 789',
-      bairro: 'Savassi',
-      cidade: 'Belo Horizonte',
-      uf: 'MG'
+      codigo: 'PROD-003',
+      nome: 'Arroz 5kg',
+      categoria: 'Alimentos',
+      precoVenda: 18.50,
+      estoque: 3,
+      estoqueMinimo: 10,
+      unidade: 'UN',
+      fornecedor: 'Distribuidora Alimentos'
+    },
+    {
+      id: 4,
+      codigo: 'PROD-004',
+      nome: 'Refrigerante Coca-Cola 2L',
+      categoria: 'Bebidas',
+      precoVenda: 7.99,
+      estoque: 120,
+      estoqueMinimo: 30,
+      unidade: 'UN',
+      fornecedor: 'Bebidas Brasil'
+    },
+    {
+      id: 5,
+      codigo: 'PROD-005',
+      nome: 'Sofá Retrátil 3 Lugares',
+      categoria: 'Casa e Decoração',
+      precoVenda: 1899.00,
+      estoque: 2,
+      estoqueMinimo: 3,
+      unidade: 'UN',
+      fornecedor: 'Móveis Premium'
     }
   ]);
 
@@ -94,7 +120,7 @@ export function Clientes() {
             }`}
           >
             <Plus className="w-5 h-5" />
-            Clientes
+            Produtos
           </button>
           <button 
             onClick={() => setViewMode('lista')}
@@ -123,11 +149,11 @@ export function Clientes() {
 
       <div className="bg-white rounded-2xl py-3 px-8">
         {viewMode === 'cadastro' ? (
-          <CadastroClientes formData={formData} onFormDataChange={setFormData} />
+          <CadastroProdutos formData={formData} onFormDataChange={setFormData} />
         ) : viewMode === 'lista' ? (
-          <ListaClientes clientes={clientes} />
+          <ListaProdutos produtos={produtos} />
         ) : (
-          <RelatoriosClientes />
+          <RelatoriosProdutos />
         )}
       </div>
     </div>
