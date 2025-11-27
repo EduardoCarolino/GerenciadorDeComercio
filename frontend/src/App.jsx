@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Box, CircleDollarSign, CircleUser, House, Settings, Truck, User } from 'lucide-react';
 import { useRoutes } from 'react-router-dom';
 import { DashBoard } from './pages/dashboard';
+import { Produtos } from './pages/produtos';
 
 function App() {
   const [pageActive, setPageActive] = useState('dashboard')
@@ -39,7 +40,8 @@ function App() {
         </div>
       </div>
       <div className='w-[78%] h-full'>
-          {pageActive === 'dashboard' ? <DashBoard /> : ''}
+          {pageActive === 'dashboard' && <DashBoard />}
+          {pageActive === 'produtos' && <Produtos />}
       </div>
     </div>
   )
