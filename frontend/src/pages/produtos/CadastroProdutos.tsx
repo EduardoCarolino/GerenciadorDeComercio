@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import { criarUmProduto } from '../../actions/actionProdutos';
+import { atualizarUmProduto, criarUmProduto } from '../../actions/actionProdutos';
 import { Produto } from '.';
 
 interface FormData {
@@ -8,10 +8,10 @@ interface FormData {
   nome: string;
   descricao: string;
   categoria: string;
-  precoCompra: string;
-  precoVenda: string;
-  estoque: string;
-  estoqueMinimo: string;
+  // precoCompra: string;
+  precoVenda: number;
+  estoque: number;
+  estoqueMinimo: number;
   unidade: string;
   fornecedor: string;
 }
@@ -19,6 +19,7 @@ interface FormData {
 interface CadastroProdutosProps {
   formData: FormData;
   onFormDataChange: (data: FormData) => void;
+  idEdicao?: string;
 }
 
 const categorias = [
@@ -41,7 +42,7 @@ const unidades = [
   'PC'
 ];
 
-export function CadastroProdutos({ formData, onFormDataChange }: CadastroProdutosProps) {
+export function CadastroProdutos({ formData, onFormDataChange, idEdicao }: CadastroProdutosProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     onFormDataChange({
@@ -53,7 +54,11 @@ export function CadastroProdutos({ formData, onFormDataChange }: CadastroProduto
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Dados do produto:', formData);
-    // criarUmProduto(formData)
+    if(idEdicao){
+      atualizarUmProduto({...formData, id: 0}, idEdicao)
+    } else {
+      criarUmProduto({...formData, id: 0} as Produto)
+    }
     // Aqui você pode adicionar a lógica para enviar os dados para o backend
   };
 
@@ -149,7 +154,7 @@ export function CadastroProdutos({ formData, onFormDataChange }: CadastroProduto
 
           {/* Coluna Direita */}
           <div className="flex flex-col gap-4">
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Preço de Compra
               </label>
@@ -161,7 +166,7 @@ export function CadastroProdutos({ formData, onFormDataChange }: CadastroProduto
                 placeholder="0,00"
                 className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-[#008080] focus:border-transparent"
               />
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -240,10 +245,10 @@ export function CadastroProdutos({ formData, onFormDataChange }: CadastroProduto
                 nome: '',
                 descricao: '',
                 categoria: '',
-                precoCompra: '',
-                precoVenda: '',
-                estoque: '',
-                estoqueMinimo: '',
+                // precoCompra: '',
+                precoVenda: 0,
+                estoque: 0,
+                estoqueMinimo: 0,
                 unidade: '',
                 fornecedor: ''
               });

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Download, ChevronDown, Eye } from 'lucide-react';
+import { buscarTodasVendas } from '../../actions/actionsVendas';
 
-interface Venda {
+export interface Venda {
   id: number;
   data: string;
   cliente: string;
@@ -13,29 +14,28 @@ export function HistoricoVendas() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('todos');
 
-  const [vendas] = useState<Venda[]>([
-    {
-      id: 1,
-      data: '15/01/2024 14:30',
-      cliente: 'João Silva',
-      total: 250.00,
-      status: 'Concluída'
-    },
-    {
-      id: 2,
-      data: '15/01/2024 10:15',
-      cliente: 'Maria Santos',
-      total: 180.50,
-      status: 'Concluída'
-    },
-    {
-      id: 3,
-      data: '14/01/2024 16:45',
-      cliente: 'Pedro Oliveira',
-      total: 320.75,
-      status: 'Concluída'
-    }
-  ]);
+  const [vendas, setVendas] = useState<Venda[]>([]);
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  // Função auxiliar para buscar e atualizar
+  async function carregarDados() {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await buscarTodasVendas(); 
+      console.log(dados)
+      setVendas(dados); // 2. ATUALIZA O ESTADO
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
+
 
   return (
     <>
@@ -103,7 +103,7 @@ export function HistoricoVendas() {
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">#{venda.id}</td>
                 <td className="py-4 px-6 text-sm text-gray-600">{venda.data}</td>
                 <td className="py-4 px-6 text-sm text-gray-600">{venda.cliente}</td>
-                <td className="py-4 px-6 text-sm text-right text-gray-900 font-medium">R$ {venda.total.toFixed(2).replace('.', ',')}</td>
+                <td className="py-4 px-6 text-sm text-right text-gray-900 font-medium">R$ {venda.total}</td>
                 <td className="py-4 px-6 text-center">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     {venda.status}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Download, Edit, Trash2, ChevronDown } from 'lucide-react';
+import { deletarUmCliente } from '../../actions/actionClientes';
 // import { Cliente } from './indexCliente';
 
 interface Cliente {
@@ -17,6 +18,19 @@ interface Cliente {
 interface ListaClientesProps {
   clientes: Cliente[];
 }
+
+  async function deletarDados(email: string) {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await deletarUmCliente(email); 
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
 
 export function ListaClientes({ clientes }: ListaClientesProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -99,7 +113,9 @@ export function ListaClientes({ clientes }: ListaClientesProps) {
                     <button className="p-2 text-[#008080] hover:bg-[#008080] hover:text-white rounded-lg transition-all duration-200 hover:scale-110">
                       <Edit className="w-4 h-4" />
                     </button>
-                    <button className="p-2 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all duration-200 hover:scale-110">
+                    <button className="p-2 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all duration-200 hover:scale-110"
+                      onClick={() => {deletarDados(cliente.email)}}
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

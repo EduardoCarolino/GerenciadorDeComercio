@@ -26,8 +26,12 @@ async function createProduto(bodyProduto: Produto) {
     return await response.json()
 }
 
-async function updateProduto(bodyProduto: Produto) {
-    const response = await fetch('http://127.0.0.1:8000/produtos/', {
+async function updateProduto(bodyProduto: Produto, email: string) {
+    const responseGet = await fetch(`http://127.0.0.1:8000/produtos?nome=${email}`);
+
+    const data: Produto[] = await responseGet.json()
+
+    const response = await fetch(`http://127.0.0.1:8000/produtos/${data[0].id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -46,9 +50,9 @@ async function deleteProduto(nome: string) {
     // Alterei de email para nome, pois produtos geralmente são buscados por nome ou código
     const responseGet = await fetch(`http://127.0.0.1:8000/produtos?nome=${nome}`);
 
-    const data: Produto = await responseGet.json() 
+    const data: Produto[] = await responseGet.json() 
 
-    const response = await fetch(`http://127.0.0.1:8000/produtos/${data.id}`, {
+    const response = await fetch(`http://127.0.0.1:8000/produtos/${data[0].id}/`, {
         method: 'DELETE'
     });
 

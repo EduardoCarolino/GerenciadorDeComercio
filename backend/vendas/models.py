@@ -25,10 +25,3 @@ class Venda(models.Model):
     
     # Status com opções pré-definidas (default define o padrão inicial)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDENTE')
-
-    def __str__(self):
-        return f"Venda {self.id} - {self.cliente.nome}"
-
-    class Meta:
-        verbose_name = "Venda"
-        verbose_name_plural = "Vendas"

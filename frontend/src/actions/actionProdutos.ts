@@ -14,8 +14,8 @@ export async function criarUmProduto(body: Produto) {
     console.log(response);
 }
 
-export async function atualizarUmProduto(body: Produto) {
-    const response = await ServiceProduto.updateProduto(body);
+export async function atualizarUmProduto(body: Produto, email: string) {
+    const response = await ServiceProduto.updateProduto(body, email);
 
     console.log(response);
 }

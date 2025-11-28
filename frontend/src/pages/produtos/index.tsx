@@ -22,10 +22,10 @@ interface FormData {
   nome: string;
   descricao: string;
   categoria: string;
-  precoCompra: string;
-  precoVenda: string;
-  estoque: string;
-  estoqueMinimo: string;
+  // precoCompra: string;
+  precoVenda: number;
+  estoque: number;
+  estoqueMinimo: number;
   unidade: string;
   fornecedor: string;
 }
@@ -37,10 +37,10 @@ export function Produtos() {
     nome: '',
     descricao: '',
     categoria: '',
-    precoCompra: '',
-    precoVenda: '',
-    estoque: '',
-    estoqueMinimo: '',
+    // precoCompra: '',
+    precoVenda: 0,
+    estoque: 0,
+    estoqueMinimo: 0,
     unidade: '',
     fornecedor: ''
   });
@@ -72,8 +72,8 @@ export function Produtos() {
     <div className="w-full h-full pt-5 px-8 pb-8 overflow-y-auto">
       <div className="mb-4 flex-shrink-0">
         <div className="mb-4">
-          <h1 className="text-5xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600 text-base">Visão geral do seu negócio.</p>
+          <h1 className="text-5xl font-bold text-gray-900 mb-2">Produtos</h1>
+          <p className="text-gray-600 text-base">Gerencie seus produtos.</p>
         </div>
         <div className="bg-white rounded-lg py-1 px-4 flex gap-3">
           <button 

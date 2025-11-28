@@ -43,12 +43,17 @@ async function updateCliente(bodyCliente: Cliente) {
 }
 
 async function deleteCliente(email: string) {
+  console.log(email)
     const responseGet = await fetch(`http://127.0.0.1:8000/clientes?email=${email}`);
 
-    const data: Cliente = await responseGet.json() 
+    const data: Cliente[] = await responseGet.json() 
+    console.log('esse é o data:', data)
 
-    const response = await fetch(`http://127.0.0.1:8000/clientes/${data.id}`, {
-        method: 'DELETE'
+    const url = `http://127.0.0.1:8000/clientes/${data[0].id}/`
+    console.log(url)
+
+    const response = await fetch(url, {
+      method: 'DELETE'
     });
 
     console.log(response)

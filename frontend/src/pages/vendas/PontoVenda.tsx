@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User, Box, ShoppingBag, TrendingUp, Plus, X, Check, CreditCard, Wallet, FileText } from 'lucide-react';
+import { criarUmaVenda } from '../../actions/actionsVendas';
+import { Produto } from '../produtos';
+import { buscarTodosProdutos } from '../../actions/actionProdutos';
 
 interface ItemCarrinho {
   codigo: string;
@@ -108,6 +111,12 @@ export function PontoVenda() {
         cartao: usarCartao ? cartaoData : null,
         total: totalVenda
       });
+  // id: number;
+  // data: string;
+  // cliente: string;
+  // total: number;
+  // status: string;
+      criarUmaVenda({id: 0, data: '27/11/25', cliente: clienteData.nome, total: totalVenda, status: 'CONCLUIDA'})
       // Limpar dados e fechar modal
       setCarrinho([]);
       setClienteData({ cpf: '', nome: '', telefone: '' });
@@ -119,6 +128,28 @@ export function PontoVenda() {
       alert('O valor pago é menor que o total da venda!');
     }
   };
+
+  const [produtos, setProdutos] = useState<Produto[]>([])
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  // Função auxiliar para buscar e atualizar
+  async function carregarDados() {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await buscarTodosProdutos(); 
+      console.log(dados)
+      setProdutos(dados); // 2. ATUALIZA O ESTADO
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
 
   const calcularTroco = () => {
     const dinheiro = parseFloat(pagamentoData.dinheiro.replace(',', '.')) || 0;
@@ -419,9 +450,11 @@ export function PontoVenda() {
                   className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-[#008080] focus:border-transparent appearance-none bg-white cursor-pointer"
                 >
                   <option value="">Selecione o produto</option>
-                  <option value="Produto 1">Produto 1</option>
-                  <option value="Produto 2">Produto 2</option>
-                  <option value="Produto 3">Produto 3</option>
+                  {produtos.map((item) => {
+                    return (
+                      <option value="Produto 1">{item.nome}</option>
+                    )
+                  })}
                 </select>
               </div>
               <div className="grid grid-cols-2 gap-3">
