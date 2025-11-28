@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Download, Edit, Trash2, ChevronDown } from 'lucide-react';
+import { deletarUmCliente } from '../../actions/actionClientes';
 
 interface Produto {
   id: number;
@@ -16,6 +17,19 @@ interface Produto {
 interface ListaProdutosProps {
   produtos: Produto[];
 }
+
+  async function deletarDados(nome: string) {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await deletarUmCliente(nome); 
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
 
 export function ListaProdutos({ produtos }: ListaProdutosProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -96,7 +110,7 @@ export function ListaProdutos({ produtos }: ListaProdutosProps) {
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">{produto.codigo}</td>
                 <td className="py-4 px-6 text-sm font-medium text-gray-900">{produto.nome}</td>
                 <td className="py-4 px-6 text-sm text-gray-600">{produto.categoria}</td>
-                <td className="py-4 px-6 text-sm text-gray-600">R$ {produto.precoVenda.toFixed(2).replace('.', ',')}</td>
+                <td className="py-4 px-6 text-sm text-gray-600">R$ {produto.precoVenda}</td>
                 <td className={`py-4 px-6 text-sm font-medium ${
                   produto.estoque <= produto.estoqueMinimo ? 'text-red-600' : 'text-gray-900'
                 }`}>
@@ -113,7 +127,9 @@ export function ListaProdutos({ produtos }: ListaProdutosProps) {
                       <Edit className="w-4 h-4" />
                     </button>
                     <button className="p-2 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all duration-200 hover:scale-110">
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-4 h-4"  
+                        onClick={() => {deletarDados(produto.nome)}}
+                      />
                     </button>
                   </div>
                 </td>

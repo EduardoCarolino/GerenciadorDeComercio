@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Plus, List, FileText, Settings, Search, Filter, Download, Edit, Trash2, Save, RotateCcw, X, BarChart3, Mail } from 'lucide-react';
+import { buscarTodosFornecedores } from '../actions/actionFornecedor';
 
 // Interface for Supplier
-interface Fornecedor {
+export interface Fornecedor {
     id: number;
     codigo: string;
     nome: string;
@@ -26,7 +27,7 @@ interface Fornecedor {
 export function Fornecedores() {
     const [activeTab, setActiveTab] = useState('lista');
     const [searchTerm, setSearchTerm] = useState('');
-
+    
     // Form State
     const initialFormState: Fornecedor = {
         id: 0,
@@ -52,48 +53,27 @@ export function Fornecedores() {
     const [isEditing, setIsEditing] = useState(false);
 
     // Mock Data
-    const [fornecedores, setFornecedores] = useState<Fornecedor[]>([
-        {
-            id: 1,
-            codigo: "FOR0001",
-            nome: "Empresa ABC Ltda",
-            email: "contato@empresaabc.com",
-            telefone: "(11) 3333-4444",
-            celular: "(11) 99999-8888",
-            telefoneFixo: "(11) 3333-4444",
-            cnpj: "12.345.678/0001-90",
-            rg: "",
-            cep: "01234-567",
-            endereco: "Rua das Flores",
-            numero: "123",
-            complemento: "Sala 1",
-            bairro: "Centro",
-            cidade: "São Paulo",
-            uf: "SP",
-            ramoAtividade: "Alimentício",
-            status: "ativo"
-        },
-        {
-            id: 2,
-            codigo: "FOR0002",
-            nome: "Tech Solutions SA",
-            email: "vendas@techsolutions.com",
-            telefone: "(11) 3333-5555",
-            celular: "(11) 98888-7777",
-            telefoneFixo: "(11) 3333-5555",
-            cnpj: "98.765.432/0001-10",
-            rg: "",
-            cep: "13000-000",
-            endereco: "Av. Tecnologia",
-            numero: "1000",
-            complemento: "",
-            bairro: "Tecnopolo",
-            cidade: "Campinas",
-            uf: "SP",
-            ramoAtividade: "Tecnologia",
-            status: "ativo"
-        }
-    ]);
+    const [fornecedores, setFornecedores] = useState<Fornecedor[]>([]);
+
+  useEffect(() => {
+    carregarDados();
+  }, []);
+
+  // Função auxiliar para buscar e atualizar
+  async function carregarDados() {
+    // setIsLoading(true);
+    try {
+      // Chamada ao Server Action
+      const dados = await buscarTodosFornecedores(); 
+      console.log(dados)
+      setFornecedores(dados); // 2. ATUALIZA O ESTADO
+    } catch (err) {
+      console.error(err);
+    } 
+    // finally {
+    //   setIsLoading(false);
+    // }
+  }
 
     // Filtered Suppliers
     const filteredFornecedores = fornecedores.filter(f =>
@@ -556,7 +536,10 @@ export function Fornecedores() {
                     ].map((tab) => (
                         <button
                             key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
+                            onClick={() => {
+                                setActiveTab(tab.id);
+                                activeTab === 'lista' ? carregarDados() : '';
+                            }}
                             className={`px-6 py-3 rounded-full flex items-center gap-2 transition-colors font-normal text-sm ${
                                 activeTab === tab.id
                                     ? 'bg-[#008080] text-white hover:bg-[#006666]'

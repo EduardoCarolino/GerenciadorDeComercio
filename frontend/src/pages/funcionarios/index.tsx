@@ -4,7 +4,7 @@ import { CadastroFuncionarios } from './CadastroFuncionarios';
 import { ListaFuncionarios } from './ListaFuncionarios';
 import { RelatoriosFuncionarios } from './RelatoriosFuncionarios';
 
-interface Funcionario {
+export interface Funcionario {
   id: number;
   codigo: string;
   nomeCompleto: string;

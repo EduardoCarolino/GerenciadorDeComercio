@@ -1,5 +1,7 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import { criarUmCliente } from '../../actions/actionClientes';
+import { Cliente } from './indexCliente';
 
 interface FormData {
   nomeCompleto: string;
@@ -34,7 +36,8 @@ export function CadastroClientes({ formData, onFormDataChange }: CadastroCliente
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Dados do cliente:', formData);
+    // console.log('Dados do cliente:', formData);
+    criarUmCliente(formData as Cliente)
     // Aqui você pode adicionar a lógica para enviar os dados para o backend
   };
 

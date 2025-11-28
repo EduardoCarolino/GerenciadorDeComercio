@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Box, CircleDollarSign, CircleUser, House, Settings, Truck, User, Users, LogOut } from 'lucide-react';
 import { DashBoard } from './pages/dashboard';
-import { Clientes } from './pages/clientes/index';
+import { Clientes } from './pages/clientes/indexCliente';
 import { Funcionarios } from './pages/funcionarios/index';
 import { Vendas } from './pages/vendas/index';
 import { Produtos } from './pages/produtos/index';

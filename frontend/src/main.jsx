@@ -7,11 +7,11 @@ import { Login } from './pages/login.js';
 
 const router = createBrowserRouter([
 	{
-		path: "/",
+		path: "/app",
 		element: <App />,
 	},
 	{
-		path: "/login",
+		path: "/",
 		element: <Login />
 	}
 ]);
